@@ -1,4 +1,4 @@
-/* Build the favicons from the real logo mark (the sun emblem above the wordmark).
+/* Build the favicons + the link-preview (Open Graph) card from the real logo.
    Source: public/media/logo-light.png — its pale glyph reads on the navy plate. */
 import sharp from "sharp";
 import { writeFileSync } from "node:fs";
@@ -69,4 +69,21 @@ const frames = await Promise.all(
 );
 writeFileSync("public/favicon.ico", ico(frames));
 
-console.log(out.map(([p]) => p).join("\n") + "\npublic/favicon.ico");
+/* Link-preview card (WhatsApp, LinkedIn, Facebook, X): the whole logo —
+   emblem + wordmark + "PIEU · STRUCTURE · CHEVRON" — centred on navy. */
+const OG = { w: 1200, h: 630 };
+const logo = await sharp(SRC)
+  .resize({ height: 470, fit: "inside" })
+  .toBuffer();
+const card = Buffer.from(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="${OG.w}" height="${OG.h}">
+     <rect width="${OG.w}" height="${OG.h}" fill="${NAVY}"/>
+     <rect y="${OG.h - 8}" width="${OG.w}" height="8" fill="#f6a821"/>
+   </svg>`
+);
+await sharp(card)
+  .composite([{ input: logo, gravity: "center" }])
+  .jpeg({ quality: 88, chromaSubsampling: "4:4:4" })
+  .toFile("public/og-image.jpg");
+
+console.log(out.map(([p]) => p).join("\n") + "\npublic/favicon.ico\npublic/og-image.jpg");
