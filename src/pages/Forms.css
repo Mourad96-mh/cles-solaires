@@ -1,0 +1,55 @@
+.form-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 50px;
+  align-items: start;
+}
+
+.form-aside h2 { margin-bottom: 12px; }
+.contact-list { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 20px; }
+.contact-list li { display: flex; align-items: center; gap: 16px; }
+.contact-list .icon-badge { margin-bottom: 0; flex-shrink: 0; }
+.contact-list strong { display: block; color: var(--navy); font-family: var(--font-head); }
+.contact-list a:hover { color: var(--solar-dark); }
+
+.aside-callout {
+  margin-top: 28px;
+  padding: 20px 22px;
+  background: var(--navy);
+  color: #fff;
+  border-radius: var(--radius);
+}
+.aside-callout strong { display: block; margin-bottom: 4px; }
+.aside-callout a { font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; color: var(--solar); }
+
+.form-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 36px;
+  box-shadow: var(--shadow);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-card .btn { width: 100%; justify-content: center; margin-top: 6px; }
+
+.filedrop {
+  display: flex;
+  align-items: center;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  background: var(--bg-soft);
+  cursor: pointer;
+  color: var(--muted);
+  transition: border-color 0.15s ease;
+}
+.filedrop:hover { border-color: var(--sky); }
+.filedrop input[type="file"] { display: none; }
+
+@media (max-width: 880px) {
+  .form-layout { grid-template-columns: 1fr; gap: 36px; }
+}
+@media (max-width: 520px) {
+  .form-row { grid-template-columns: 1fr; }
+  .form-card { padding: 24px; }
+}

@@ -1,0 +1,79 @@
+/* Floating WhatsApp button — sits above page content, under the navbar (100)
+   and the References lightbox (200) so neither gets overlapped. */
+.wa-fab {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 90;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 14px; /* 28px icon + 2×14 = a true 56px circle while collapsed */
+  border-radius: 999px;
+
+  background: #25d366;
+  color: #fff;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(9, 88, 47, 0.34);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.wa-fab:hover {
+  background: #1eb85a;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(9, 88, 47, 0.42);
+}
+.wa-fab:focus-visible {
+  outline: 3px solid var(--solar);
+  outline-offset: 3px;
+}
+.wa-fab__icon {
+  width: 28px;
+  height: 28px;
+  flex: none;
+}
+
+/* Collapsed to a circle by default; the label reveals on hover/focus.
+   `max-width` animates cleanly here because the label is a single short word. */
+.wa-fab__label {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  transition: max-width 0.28s ease, opacity 0.2s ease, margin 0.28s ease;
+  margin-right: -10px; /* cancels the flex gap while collapsed */
+}
+.wa-fab:hover .wa-fab__label,
+.wa-fab:focus-visible .wa-fab__label {
+  max-width: 120px;
+  opacity: 1;
+  margin-right: 0;
+}
+
+/* Phones: icon-only, slightly smaller, tucked clear of the thumb zone */
+@media (max-width: 640px) {
+  .wa-fab {
+    height: 52px;
+    padding: 0 13px; /* 26px icon + 2×13 = 52px circle */
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+  }
+  .wa-fab__icon { width: 26px; height: 26px; }
+  .wa-fab__label { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-fab,
+  .wa-fab__label { transition: none; }
+  .wa-fab:hover { transform: none; }
+}
+
+/* Never print the floating button */
+@media print {
+  .wa-fab { display: none; }
+}

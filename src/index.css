@@ -1,0 +1,205 @@
+:root {
+  /* Brand palette */
+  --navy: #0e2a3b;
+  --navy-800: #123345;
+  --navy-700: #1b4458;
+  --solar: #f6a821;
+  --solar-dark: #e08e0b;
+  --sky: #2f9fd6;
+  --ink: #16242c;
+  --muted: #5b6b73;
+  --line: #e3e8eb;
+  --bg: #ffffff;
+  --bg-soft: #f5f7f8;
+  --bg-tint: #eef4f7;
+  --white: #ffffff;
+
+  --radius: 14px;
+  --radius-sm: 9px;
+  --shadow-sm: 0 1px 3px rgba(14, 42, 59, 0.08);
+  --shadow: 0 10px 30px rgba(14, 42, 59, 0.10);
+  --shadow-lg: 0 24px 60px rgba(14, 42, 59, 0.18);
+
+  --maxw: 1180px;
+  --font-head: "Sora", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  /* Clip horizontal overflow at the root: the off-canvas mobile menu is a
+     position:fixed panel parked at translateX(100%), so its containing block is
+     the root — only clipping here removes the phantom horizontal scroll. `clip`
+     (not `hidden`) avoids creating a scroll container, so sticky nav still works. */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Clip horizontal overflow (off-canvas mobile menu parked at translateX(100%),
+     animated hero bg) without creating a scroll container — keeps sticky nav working.
+     `clip` is preferred over `hidden` for exactly this reason. */
+  overflow-x: clip;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-head);
+  color: var(--navy);
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.4rem); }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.5rem); }
+h3 { font-size: clamp(1.15rem, 2vw, 1.4rem); }
+
+p { margin: 0 0 1rem; }
+
+ul { margin: 0 0 1rem; padding-left: 1.2rem; }
+
+/* Layout helpers */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section { padding: clamp(56px, 8vw, 110px) 0; }
+.section--soft { background: var(--bg-soft); }
+.section--navy { background: var(--navy); color: #d7e3ea; }
+.section--navy h2, .section--navy h3 { color: var(--white); }
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--solar-dark);
+  margin-bottom: 14px;
+}
+.section--navy .eyebrow { color: var(--solar); }
+
+.section-head { max-width: 720px; margin-bottom: 48px; }
+.section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+.section-head p { color: var(--muted); font-size: 1.08rem; }
+.section--navy .section-head p { color: #aebfc9; }
+
+.lead { font-size: 1.15rem; color: var(--muted); }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 0.98rem;
+  padding: 13px 24px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn--primary { background: var(--solar); color: var(--navy); }
+.btn--primary:hover { background: var(--solar-dark); box-shadow: var(--shadow); }
+.btn--ghost { background: transparent; color: var(--navy); border-color: var(--line); }
+.btn--ghost:hover { border-color: var(--navy); }
+.btn--light { background: var(--white); color: var(--navy); }
+.btn--outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,0.4); }
+.btn--outline-light:hover { border-color: var(--white); }
+
+/* Cards & grids */
+.grid { display: grid; gap: 28px; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+
+.icon-badge {
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  border-radius: 13px;
+  background: var(--bg-tint);
+  color: var(--navy);
+  margin-bottom: 18px;
+}
+.icon-badge svg { width: 26px; height: 26px; }
+
+/* Reveal-on-scroll */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Forms */
+.field { margin-bottom: 18px; }
+.field label { display: block; font-weight: 600; font-size: 0.92rem; margin-bottom: 7px; color: var(--navy); }
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background: var(--white);
+  color: var(--ink);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px rgba(47, 159, 214, 0.15);
+}
+.field textarea { resize: vertical; min-height: 130px; }
+.field--required label::after { content: " *"; color: var(--solar-dark); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.form-note { font-size: 0.85rem; color: var(--muted); }
+.form-success {
+  background: #e8f6ee; border: 1px solid #b6e2c6; color: #1d6b3a;
+  padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 18px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .container { padding: 0 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .btn:hover, .card:hover { transform: none; }
+}

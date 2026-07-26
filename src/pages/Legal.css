@@ -1,0 +1,12 @@
+.legal { max-width: 800px; }
+.legal h2 { font-size: 1.35rem; margin: 34px 0 10px; }
+.legal p { color: var(--ink); }
+.legal a { color: var(--solar-dark); text-decoration: underline; }
+.legal__placeholder {
+  background: var(--bg-tint);
+  border-left: 3px solid var(--solar);
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-size: 0.95rem;
+}

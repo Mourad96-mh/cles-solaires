@@ -1,0 +1,191 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid transparent;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+/* Blur/background lives on a pseudo-element, NOT on .nav itself.
+   `backdrop-filter` on .nav would make it the containing block for the
+   position:fixed mobile menu — so opening the burger while scrolled down
+   (e.g. at the footer) anchored the panel to the page top instead of the
+   viewport, forcing users to scroll up to see it. */
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: saturate(150%) blur(10px);
+  backdrop-filter: saturate(150%) blur(10px);
+}
+.nav--scrolled {
+  border-color: var(--line);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 88px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.18rem;
+  color: var(--navy);
+}
+.brand__logo {
+  height: 74px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Produits dropdown */
+.nav__group { position: relative; }
+.nav__grouplabel { cursor: default; display: inline-flex; align-items: center; gap: 5px; }
+.nav__grouplabel::after {
+  content: "";
+  width: 6px; height: 6px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  opacity: 0.7;
+}
+.nav__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 220px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md, 0 12px 30px rgba(14, 42, 59, 0.14));
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+.nav__group:hover .nav__dropdown,
+.nav__group:focus-within .nav__dropdown {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+.nav__drop {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--navy);
+  padding: 10px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.nav__drop:hover { background: var(--bg-tint); }
+.nav__drop.is-active { color: var(--solar-dark); }
+
+/* Language switch */
+.nav__lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 8px;
+  color: var(--muted);
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+.nav__langbtn { color: var(--muted); padding: 4px 5px; border-radius: 6px; }
+.nav__langbtn:hover { color: var(--navy); }
+.nav__langbtn.is-active { color: var(--solar-dark); }
+
+.nav__menu {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav__link {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 0.93rem;
+  color: var(--navy);
+  padding: 9px 11px;
+  border-radius: 8px;
+  position: relative;
+  white-space: nowrap;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.nav__link:hover { background: var(--bg-tint); }
+.nav__link.is-active { color: var(--solar-dark); }
+.nav__cta { margin-left: 10px; padding: 11px 20px; }
+
+.nav__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px; height: 44px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.nav__burger span {
+  display: block;
+  width: 20px; height: 2px;
+  background: var(--navy);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.nav__burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav__burger.is-open span:nth-child(2) { opacity: 0; }
+.nav__burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 1120px) {
+  .nav__burger { display: flex; }
+  .nav__menu {
+    position: fixed;
+    /* The .nav header sets backdrop-filter, which makes it the containing block
+       for this fixed panel — so `bottom: 0` would resolve against the 88px-tall
+       nav (collapsing the menu to a strip). Use an explicit viewport height.
+       100dvh tracks the mobile browser's dynamic chrome. */
+    top: 88px;
+    left: 0;
+    right: 0;
+    height: calc(100dvh - 88px);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 24px;
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+  }
+  .nav__menu.is-open { transform: translateX(0); }
+  .nav__link { font-size: 1.1rem; padding: 14px 12px; border-bottom: 1px solid var(--line); border-radius: 0; }
+  .nav__cta { margin: 16px 0 0; justify-content: center; }
+
+  /* Flatten the Produits dropdown into inline links on mobile */
+  .nav__group { display: flex; flex-direction: column; }
+  .nav__grouplabel { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); border-bottom: none; padding-bottom: 4px; }
+  .nav__grouplabel::after { display: none; }
+  .nav__dropdown {
+    position: static;
+    opacity: 1; visibility: visible; transform: none;
+    border: none; box-shadow: none; padding: 0 0 0 10px; min-width: 0;
+    background: transparent;
+  }
+  .nav__drop { font-size: 1.05rem; padding: 12px; border-bottom: 1px solid var(--line); border-radius: 0; }
+
+  .nav__lang { margin: 16px 0 0; justify-content: center; font-size: 1rem; }
+  .nav__langbtn { padding: 8px 10px; }
+}
