@@ -40,7 +40,11 @@
   color: var(--navy);
 }
 .brand__logo {
-  height: 74px;
+  /* The logo is a stacked lockup (emblem + wordmark + chevron) in a near-square
+     PNG with no transparent padding to reclaim, so presence comes from size
+     alone. 80px in the 88px bar leaves 4px of breathing room top and bottom —
+     about the largest it can go before it reads as cramped. */
+  height: 80px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -152,14 +156,17 @@
   .nav__burger { display: flex; }
   .nav__menu {
     position: fixed;
-    /* The .nav header sets backdrop-filter, which makes it the containing block
-       for this fixed panel — so `bottom: 0` would resolve against the 88px-tall
-       nav (collapsing the menu to a strip). Use an explicit viewport height.
-       100dvh tracks the mobile browser's dynamic chrome. */
-    top: 88px;
+    /* --nav-h is the header's measured height, published by Navbar.jsx — it keeps
+       the panel flush under the header instead of guessing 88px (the header is
+       really 89px: 88px .nav__inner + 1px border). The fallback covers the first
+       paint before the effect runs.
+       `bottom: 0` is deliberately avoided: an ancestor with backdrop-filter would
+       become this fixed panel's containing block and collapse it to a strip, so
+       the height is stated explicitly. 100dvh tracks mobile browser chrome. */
+    top: var(--nav-h, 89px);
     left: 0;
     right: 0;
-    height: calc(100dvh - 88px);
+    height: calc(100dvh - var(--nav-h, 89px));
     flex-direction: column;
     align-items: stretch;
     gap: 4px;

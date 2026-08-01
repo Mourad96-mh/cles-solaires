@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { NAV } from "../data/site.js";
 import { useLang, localizePath, stripLocale } from "../i18n.jsx";
@@ -7,10 +7,22 @@ import "./Navbar.css";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const headerRef = useRef(null);
   const { lang, t } = useLang();
   const { pathname } = useLocation();
   const basePath = stripLocale(pathname);
   const close = () => setOpen(false);
+
+  /* Opening the burger jumps the page back to the top. Two things matter here:
+     `behavior: "instant"` (NOT "auto", which defers to `html { scroll-behavior:
+     smooth }` and would get cancelled mid-animation by the overflow lock below),
+     and scrolling *before* that lock lands — `overflow: hidden` on body makes it
+     a scroll container, which strips the sticky header out of the viewport and
+     leaves an empty band above the panel. */
+  const toggle = () => {
+    if (!open) window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    setOpen((v) => !v);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -24,8 +36,23 @@ export default function Navbar() {
     return () => (document.body.style.overflow = "");
   }, [open]);
 
+  /* Publish the header's real height as --nav-h so the mobile panel can sit
+     flush under it. Hardcoding 88px left a 1px seam (.nav adds a 1px bottom
+     border on top of the 88px .nav__inner) and would drift the moment the
+     header's height changes at a breakpoint. */
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const apply = () =>
+      document.documentElement.style.setProperty("--nav-h", `${el.getBoundingClientRect().height}px`);
+    apply();
+    const ro = new ResizeObserver(apply);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   return (
-    <header className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
+    <header ref={headerRef} className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
       <div className="container nav__inner">
         <Link to={localizePath("/", lang)} className="brand" onClick={close}>
           <img
@@ -95,7 +122,7 @@ export default function Navbar() {
           className={`nav__burger ${open ? "is-open" : ""}`}
           aria-label={open ? t("Fermer le menu", "Close menu") : t("Ouvrir le menu", "Open menu")}
           aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
+          onClick={toggle}
         >
           <span></span><span></span><span></span>
         </button>
