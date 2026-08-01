@@ -1,5 +1,6 @@
 import { useSeo, useReveal } from "../lib/hooks.js";
 import { useLang } from "../i18n.jsx";
+import { CHEVRON_LAYOUTS, CHEVRON_TYPES, CHEVRON_FIGURES } from "../data/content.js";
 import PageHero from "../components/PageHero.jsx";
 import CtaBand from "../components/CtaBand.jsx";
 import { IconCheck, IconBolt, IconClock, IconGauge, IconArrowRight } from "../lib/icons.jsx";
@@ -11,25 +12,30 @@ export default function Chevrons() {
     lang,
     title: t("Le chevron breveté", "The patented rafter"),
     description: t(
-      "Le chevron breveté des Clés Solaires bloque les panneaux photovoltaïques par pièces coulissantes : 1 vis par chevron en portrait, 2 en paysage, temps de pose divisé par 10, démontage en secondes. Chevron classique et chevron ferrovoltaïque.",
-      "Les Clés Solaires' patented rafter clamps photovoltaic panels through sliding pieces: 1 screw per rafter in portrait, 2 in landscape, install time divided by 10, removal in seconds. Classic and rail rafter."
+      "Le chevron autobloquant breveté des Clés Solaires bloque les panneaux photovoltaïques par deux profils coulissants, sans aucune fixation : un seul écrou bloque l'ensemble des panneaux. Chevron classique et chevron ferrovoltaïque.",
+      "Les Clés Solaires' patented self-locking rafter holds photovoltaic panels with two sliding profiles, without any fixing: a single nut locks the whole set of panels. Classic and rail rafter."
     ),
     path: "/chevrons",
   });
   useReveal();
 
+  /* The three advantages the client lists at the end of his CHEVRONS section
+     (Scan2026-08-01_165057.pdf, p.5). */
   const ADVANTAGES = [
-    { icon: IconClock, title: t("Temps de pose ÷ 10", "Install time ÷ 10"), text: t("Le temps de pose des panneaux est divisé par 10 par rapport aux solutions concurrentes actuelles.", "Panel installation time is divided by 10 compared with current competing solutions.") },
-    { icon: IconGauge, title: t("Nombre de pannes réduit", "Fewer purlins"), text: t("2 seules pannes suffisent en portrait ; aucune panne n'est nécessaire pour la pose en paysage.", "Only 2 purlins are needed in portrait; none are required for landscape installation.") },
-    { icon: IconBolt, title: t("Grande portée", "Long span"), text: t("La grande portée du chevron classique lui permet de constituer une poutre de structure à part entière.", "The classic rafter's long span lets it act as a structural beam in its own right.") },
+    { icon: IconClock, title: t("Temps de pose divisé par 10", "Installation time divided by 10"), text: t("Le temps de pose des panneaux est divisé par 10 par rapport aux solutions concurrentes actuelles.", "Panel installation time is divided by 10 compared with current competing solutions.") },
+    { icon: IconGauge, title: t("Nombre de pannes réduit", "Fewer purlins"), text: t("2 files de pannes suffisent pour la pose en portrait ; aucune panne n'est nécessaire pour la pose en paysage.", "2 rows of purlins are enough for portrait installation; no purlin at all is required for landscape.") },
+    { icon: IconBolt, title: t("Une poutre de structure", "A structural beam"), text: t("La grande portée du chevron classique en fait un élément de structure porteuse, qui remplace les systèmes d'intégration classiques à crapauds.", "The long span of the classic rafter makes it a load-bearing structural element, replacing classic clamp-based integration systems.") },
   ];
 
-  const COMPARE = [
-    { key: t("Vis par chevron — portrait", "Screws per rafter — portrait"), ours: t("1 seule vis", "just 1 screw"), other: t("8 crapauds / rampant de 7 m", "8 clamps / 7 m slope") },
-    { key: t("Vis par chevron — paysage", "Screws per rafter — landscape"), ours: t("2 vis", "2 screws"), other: t("24 crapauds / rampant de 20 m", "24 clamps / 20 m slope") },
-    { key: t("Files de pannes", "Rows of purlins"), ours: t("2 files (portrait), 0 (paysage)", "2 rows (portrait), 0 (landscape)"), other: t("jusqu'à 24 files", "up to 24 rows") },
-    { key: t("Démontage d'un panneau", "Removing a panel"), ours: t("Dévisser 1 à 2 vis — quelques secondes", "Undo 1–2 screws — a few seconds"), other: t("Plusieurs dizaines de secondes", "Several dozen seconds") },
-    { key: t("Matière", "Material"), ours: t("Acier galvanisé 350 g/m² min.", "Galvanised steel, 350 g/m² min."), other: "—" },
+  /* Comparison against the current classic installation. Every figure here is
+     the client's own, restored on 01/08/2026 after he confirmed them. */
+  const SPECS = [
+    { key: t("Fixation des panneaux", "Panel fixings"), ours: t("Aucune fixation", "None at all"), theirs: t("Crapauds de blocage de chaque côté de chaque panneau", "Clamps on each side of every panel") },
+    { key: t("Rampant de 7 m, 4 panneaux (portrait)", "7 m slope, 4 panels (portrait)"), ours: t("1 seule vis par chevron", "1 single screw per rafter"), theirs: t("8 crapauds de blocage", "8 locking clamps") },
+    { key: t("File de 20 m, 12 panneaux (paysage)", "20 m row, 12 panels (landscape)"), ours: t("2 vis par chevron", "2 screws per rafter"), theirs: t("24 crapauds, 2 poutres de rives", "24 clamps, 2 edge beams") },
+    { key: t("Files de pannes", "Rows of purlins"), ours: t("2 files en portrait, aucune en paysage", "2 rows in portrait, none in landscape"), theirs: t("8 files en portrait, 24 files en paysage", "8 rows in portrait, 24 rows in landscape") },
+    { key: t("Temps de pose d'un panneau", "Time to fit one panel"), ours: t("5 à 10 secondes", "5 to 10 seconds"), theirs: t("Plus de 10 fois plus long", "More than 10 times longer") },
+    { key: t("Rôle dans la structure", "Role in the structure"), ours: t("Élément de structure porteuse de grande portée", "A long-span load-bearing structural element"), theirs: t("Accessoire d'intégration rapporté", "An add-on integration accessory") },
   ];
 
   return (
@@ -38,8 +44,8 @@ export default function Chevrons() {
         eyebrow={t("Produit breveté", "Patented product")}
         title={t("Le chevron", "The rafter")}
         text={t(
-          "Un système d'intégration photovoltaïque breveté : des pièces coulissantes bloquent les panneaux sans réglage ni précaution particulière, posés entre deux chevrons dans le sens de la longueur.",
-          "A patented photovoltaic integration system: sliding pieces clamp the panels without adjustment or special care, laid lengthwise between two rafters."
+          "Un système d'intégration photovoltaïque breveté : deux profils emboîtés coulissent l'un dans l'autre et bloquent les panneaux sans aucune fixation, déposés entre deux chevrons sans précaution particulière.",
+          "A patented photovoltaic integration system: two interlocking profiles slide one inside the other and hold the panels without any fixing, laid between two rafters without special care."
         )}
         image="/media/chevron-blocage.webp"
         current={t("Chevrons", "Rafters")}
@@ -53,24 +59,33 @@ export default function Chevrons() {
             <h2>{t("Un blocage par pièces coulissantes", "Clamping through sliding pieces")}</h2>
             <p>
               {t(
-                "Le système, breveté, est constitué de pièces coulissantes qui bloquent les panneaux photovoltaïques sur toute leur longueur. Les panneaux sont simplement déposés entre deux chevrons, sans réglage ni précaution particulière.",
-                "The patented system consists of sliding pieces that clamp the photovoltaic panels along their whole length. Panels are simply laid between two rafters, without adjustment or special care."
+                "Le chevron est constitué de deux profils emboîtés, coulissants l'un dans l'autre. Pendant le coulissement, un déplacement relatif vertical entraîne le blocage des panneaux photovoltaïques sans aucune fixation. Le pincement du panneau est important et résiste aux actions d'un vent cyclonique maximal.",
+                "The rafter is made of two interlocking profiles sliding one inside the other. During the slide, a relative vertical movement locks the photovoltaic panels without any fixing. The panel is firmly pinched and withstands maximum cyclonic wind actions."
               )}
             </p>
             <p>
               {t(
-                "En pose portrait, une seule vis par chevron suffit à bloquer toute la file de panneaux. En pose paysage, deux vis suffisent. Les profils, en acier galvanisé (350 g/m² minimum), sont calculés pour résister aux charges climatiques locales et aux règlements en vigueur.",
-                "In portrait, a single screw per rafter locks the whole row of panels. In landscape, two screws are enough. The profiles, in galvanised steel (350 g/m² minimum), are calculated to withstand local climatic loads and applicable regulations."
+                "Les panneaux peuvent être glissés depuis l'extrémité haute pour la pose en portrait, ou depuis le côté en poussant le panneau jusqu'à son emplacement pour la pose en paysage — dans tous les cas sans aucune fixation. Une fois tous les panneaux en place, un écrou bloque l'ensemble des panneaux.",
+                "Panels can be slid in from the top end for portrait installation, or from the side by pushing the panel to its position for landscape installation — in every case without any fixing. Once all the panels are in place, one nut locks the whole set."
               )}
             </p>
             <ul className="checklist">
-              <li><IconCheck /> {t("1 vis par chevron en portrait, 2 en paysage", "1 screw per rafter in portrait, 2 in landscape")}</li>
-              <li><IconCheck /> {t("Panneaux posés sans réglage, dans le sens de la longueur", "Panels laid lengthwise, without adjustment")}</li>
-              <li><IconCheck /> {t("Acier galvanisé, calculé aux charges climatiques", "Galvanised steel, sized for climatic loads")}</li>
+              <li><IconCheck /> {t("Blocage sans aucune fixation — un écrou bloque l'ensemble", "Held without any fixing — one nut locks the whole set")}</li>
+              <li><IconCheck /> {t("Panneaux déposés par le dessus ou par le dessous, sans précaution particulière", "Panels laid from above or from below, without special care")}</li>
+              <li><IconCheck /> {t("Les 2 éléments du chevron sont protégés par galvanisation", "Both rafter elements are protected by galvanising")}</li>
             </ul>
           </div>
           <div className="split__media reveal">
             <img src="/media/chevron-blocage.webp" alt={t("Chevrons de blocage des panneaux photovoltaïques", "Rafters clamping photovoltaic panels")} loading="lazy" />
+          </div>
+        </div>
+        <div className="container">
+          <div className="keyfigure reveal" style={{ marginTop: 48 }}>
+            <IconClock />
+            <span>
+              {t(CHEVRON_FIGURES.poseRatio.fr, CHEVRON_FIGURES.poseRatio.en)}{" "}
+              {t(CHEVRON_FIGURES.posePanel.fr, CHEVRON_FIGURES.posePanel.en)}
+            </span>
           </div>
         </div>
       </section>
@@ -79,25 +94,25 @@ export default function Chevrons() {
       <section className="section section--soft">
         <div className="container">
           <div className="section-head reveal">
-            <span className="eyebrow">{t("Face aux solutions actuelles", "Versus current solutions")}</span>
-            <h2>{t("Moins de vis, moins de pannes, plus vite", "Fewer screws, fewer purlins, faster")}</h2>
-            <p>{t("Là où la pose classique multiplie crapauds et files de pannes, le chevron simplifie radicalement le blocage.", "Where classic installation multiplies clamps and purlin rows, the rafter radically simplifies clamping.")}</p>
+            <span className="eyebrow">{t("Caractéristiques", "Characteristics")}</span>
+            <h2>{t("Aucune fixation, moins de pannes, plus vite", "No fixings, fewer purlins, faster")}</h2>
+            <p>{t("Là où la pose classique multiplie les fixations par crapauds, le chevron bloque les panneaux par son seul coulissement.", "Where classic installation multiplies clamp fixings, the rafter holds the panels by its sliding action alone.")}</p>
           </div>
           <div className="reveal">
             <table className="spectable spectable--compare">
               <thead>
                 <tr>
                   <th scope="col">{t("Critère", "Criterion")}</th>
-                  <th scope="col">{t("Chevron Les Clés Solaires", "Les Clés Solaires rafter")}</th>
-                  <th scope="col">{t("Pose classique concurrente", "Competing classic install")}</th>
+                  <th scope="col">{t("Chevron autobloquant", "Self-locking rafter")}</th>
+                  <th scope="col">{t("Pose classique actuelle", "Current classic installation")}</th>
                 </tr>
               </thead>
               <tbody>
-                {COMPARE.map((c) => (
-                  <tr key={c.key}>
-                    <th scope="row">{c.key}</th>
-                    <td className="is-good">{c.ours}</td>
-                    <td>{c.other}</td>
+                {SPECS.map((s) => (
+                  <tr key={s.key}>
+                    <th scope="row">{s.key}</th>
+                    <td className="is-good">{s.ours}</td>
+                    <td>{s.theirs}</td>
                   </tr>
                 ))}
               </tbody>
@@ -106,40 +121,85 @@ export default function Chevrons() {
         </div>
       </section>
 
-      {/* Two types */}
+      {/* Installation — summary card, full explanation folded underneath.
+          The client wanted his complete text kept but "non visibles
+          directement", reachable from the detailed rafter description. */}
       <section className="section">
         <div className="container">
           <div className="section-head center reveal">
+            <span className="eyebrow">{t("La pose", "Installation")}</span>
+            <h2>{t("Deux façons de mettre le panneau en place", "Two ways to put the panel in place")}</h2>
+            <p>
+              {t(
+                "La pose consiste à déposer le panneau sans précaution particulière entre les chevrons, par le dessus ou par le dessous, à son emplacement. Dépliez chaque cas pour le détail complet, chiffres à l'appui.",
+                "Installation simply means laying the panel between the rafters at its position, from above or from below, without special care. Unfold each case for the full detail, figures included."
+              )}
+            </p>
+          </div>
+          <div className="reveal">
+            {CHEVRON_LAYOUTS.map((l) => (
+              <details className="disclosure" key={l.key}>
+                <summary className="disclosure__summary">{t(l.title.fr, l.title.en)}</summary>
+                <div className="disclosure__body">
+                  <p>{t(l.intro.fr, l.intro.en)}</p>
+
+                  <h4>{t("À titre d'exemple", "By way of example")} — {t(l.example.fr, l.example.en)}</h4>
+                  <div className="versus">
+                    <div className="versus__col versus__col--ours">
+                      <span className="versus__label">{t("Avec le chevron", "With the rafter")}</span>
+                      <p>{t(l.withChevron.fr, l.withChevron.en)}</p>
+                    </div>
+                    <div className="versus__col">
+                      <span className="versus__label">{t("Pose classique actuelle", "Current classic installation")}</span>
+                      <p>{t(l.competitor.fr, l.competitor.en)}</p>
+                    </div>
+                  </div>
+
+                  <h4>{t("Organisation du chantier", "Organising the work")}</h4>
+                  <p>{t(l.method.fr, l.method.en)}</p>
+                </div>
+              </details>
+            ))}
+
+            <details className="disclosure">
+              <summary className="disclosure__summary">{t("Démontage et remplacement d'un panneau", "Dismantling and replacing a panel")}</summary>
+              <div className="disclosure__body">
+                <p>{t(CHEVRON_FIGURES.demontage.fr, CHEVRON_FIGURES.demontage.en)}</p>
+              </div>
+            </details>
+
+            <details className="disclosure">
+              <summary className="disclosure__summary">{t("Acier, galvanisation et calculs", "Steel, galvanising and calculations")}</summary>
+              <div className="disclosure__body">
+                <p>{t(CHEVRON_FIGURES.acier.fr, CHEVRON_FIGURES.acier.en)}</p>
+                <p>{t(CHEVRON_FIGURES.calcul.fr, CHEVRON_FIGURES.calcul.en)}</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      {/* Two rafter families */}
+      <section className="section section--soft">
+        <div className="container">
+          <div className="section-head center reveal">
             <span className="eyebrow">{t("Deux versions", "Two versions")}</span>
-            <h2>{t("Un chevron pour chaque usage", "A rafter for every use")}</h2>
+            <h2>{t("Deux types de chevrons sont proposés", "Two types of rafter are offered")}</h2>
           </div>
           <div className="grid grid-2">
-            <article className="card reveal">
-              <span className="icon-badge"><IconBolt /></span>
-              <h3>{t("Chevron classique", "Classic rafter")}</h3>
-              <p>
-                {t(
-                  "Destiné aux toitures de champs, aux ombrières, aux surfaces agrivoltaïques, aux hangars et aux pavillons. Sa grande portée lui permet de constituer une poutre de structure.",
-                  "For field roofs, canopies, agrivoltaic surfaces, warehouses and buildings. Its long span lets it act as a structural beam."
-                )}
-              </p>
-            </article>
-            <article className="card reveal">
-              <span className="icon-badge"><IconGauge /></span>
-              <h3>{t("Chevron particulier (ferrovoltaïque)", "Special rafter (rail PV)")}</h3>
-              <p>
-                {t(
-                  "Destiné au blocage des panneaux reposant sur les cadres de structure ferrovoltaïques, posés et bloqués entre les rails.",
-                  "Designed to clamp panels resting on rail PV structure frames, fitted and locked between the rails."
-                )}
-              </p>
-            </article>
+            {CHEVRON_TYPES.map((c, i) => (
+              <article className="card reveal" key={c.key}>
+                <span className="icon-badge">{i === 0 ? <IconBolt /> : <IconGauge />}</span>
+                <h3>{t(c.name.fr, c.name.en)}</h3>
+                <p>{t(c.text.fr, c.text.en)}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Advantages */}
-      <section className="section section--soft">
+      <section className="section">
         <div className="container">
           <div className="section-head center reveal">
             <span className="eyebrow">{t("Avantages", "Advantages")}</span>

@@ -1,0 +1,42 @@
+/* Empty, captioned box standing in for a photo the client still owes us.
+   Deliberately understated: it should read as "reserved space", not as a
+   broken image or a design element. */
+.photoframe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+  color: var(--muted);
+}
+.photoframe--wide { aspect-ratio: 4 / 3; }
+.photoframe--tall { aspect-ratio: 3 / 4; }
+
+.photoframe__tag {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  color: var(--navy);
+  opacity: 0.55;
+}
+.photoframe__caption {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  max-width: 26ch;
+}
+
+/* Inside a .split__media the parent already sets the ratio, shadow and clipping,
+   so the frame just fills it and drops its own box treatment. */
+.split__media > .photoframe,
+.grid > .photoframe {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 0;
+}

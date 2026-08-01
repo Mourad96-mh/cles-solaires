@@ -12,8 +12,8 @@ export default function Produits() {
     lang,
     title: t("Nos produits : pieu, structure, chevron", "Our products: pile, structure, rafter"),
     description: t(
-      "Les trois produits des Clés Solaires : le chevron qui bloque les panneaux photovoltaïques, la structure porteuse légère et galvanisée, et le pieu d'ancrage mécanique sans béton coulé. Chaque poste est livrable séparément.",
-      "The three Les Clés Solaires products: the rafter that clamps photovoltaic panels, the light galvanised load-bearing structure, and the mechanical anchor pile without poured concrete. Each item can be supplied separately."
+      "Les trois produits des Clés Solaires : le chevron autobloquant qui bloque les panneaux photovoltaïques sans fixation, la structure porteuse galvanisée, et le pieu d'ancrage mécanique sans béton coulé. Chaque poste est livrable séparément.",
+      "The three Les Clés Solaires products: the self-locking rafter that holds photovoltaic panels without any fixing, the galvanised load-bearing structure, and the mechanical anchor pile without poured concrete. Each item can be supplied separately."
     ),
     path: "/produits",
   });
@@ -72,21 +72,21 @@ export default function Produits() {
               <IconCheck />
               <div>
                 <strong>{t("Le pieu ancre l'installation", "The pile anchors the installation")}</strong>
-                <span>{t("Ancrage mécanique à pelles pivotantes : plus de massifs béton, une portance contrôlée par essai de traction à la pose.", "Mechanical anchoring with pivoting blades: no concrete footings, bearing capacity verified by a pull-out test during installation.")}</span>
+                <span>{t("Ancrage mécanique à pelles pivotantes : plus de massifs béton, et une résistance à l'arrachement vérifiable par essai de traction sur le site.", "Mechanical anchoring with pivoting blades: no concrete footings, and a pull-out resistance that can be verified by a tension test on site.")}</span>
               </div>
             </li>
             <li>
               <IconCheck />
               <div>
                 <strong>{t("La structure repose sur les pieux", "The structure rests on the piles")}</strong>
-                <span>{t("Ossature légère, réglable verticalement sans calage et galvanisée à chaud, posée manuellement sans engin de levage.", "Light frame, vertically adjustable without shimming and hot-dip galvanised, fitted by hand without lifting equipment.")}</span>
+                <span>{t("Ossature galvanisée, réglable verticalement sans calage. En champ solaire, elle est assez légère pour être montée manuellement dans la majorité des cas ; les ombrières et les structures agrivoltaïques sont posées à l'aide d'engins de levage.", "Galvanised frame, vertically adjustable without shimming. On solar fields it is light enough to be erected by hand in most cases; canopies and agrivoltaic structures are erected with lifting equipment.")}</span>
               </div>
             </li>
             <li>
               <IconCheck />
               <div>
                 <strong>{t("Le chevron bloque les panneaux", "The rafter clamps the panels")}</strong>
-                <span>{t("Des pièces coulissantes bloquent les panneaux sur toute leur longueur : 1 vis par chevron en portrait, 2 en paysage, démontage en quelques secondes.", "Sliding pieces clamp the panels along their full length: 1 screw per rafter in portrait, 2 in landscape, removal in seconds.")}</span>
+                <span>{t("Deux profils coulissants bloquent les panneaux sans aucune fixation ; un seul écrou bloque ensuite l'ensemble des panneaux.", "Two sliding profiles hold the panels without any fixing; a single nut then locks the whole set of panels.")}</span>
               </div>
             </li>
           </ul>

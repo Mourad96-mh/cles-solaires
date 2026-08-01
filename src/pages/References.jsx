@@ -4,7 +4,6 @@ import { useLang } from "../i18n.jsx";
 import { REFERENCES } from "../data/content.js";
 import PageHero from "../components/PageHero.jsx";
 import CtaBand from "../components/CtaBand.jsx";
-import { IconQuote } from "../lib/icons.jsx";
 import "./content.css";
 import "./References.css";
 
@@ -59,24 +58,6 @@ export default function References() {
               );
             })}
           </div>
-        </div>
-      </section>
-
-      <section className="section section--soft">
-        <div className="container">
-          <figure className="testimonial reveal">
-            <IconQuote className="testimonial__icon" />
-            <blockquote>
-              {t(
-                "« Un système complet — pieux, structure et chevrons — avec des plans clairs et des essais de portance contrôlés : un vrai accompagnement de la conception à la mise en œuvre. »",
-                "\"A complete system — piles, structure and rafters — with clear drawings and controlled bearing tests: genuine support from design to implementation.\""
-              )}
-            </blockquote>
-            <figcaption>
-              <strong>{t("Porteur de projet photovoltaïque", "Photovoltaic project owner")}</strong>
-              <span>{t("France & international", "France & international")}</span>
-            </figcaption>
-          </figure>
         </div>
       </section>
 
