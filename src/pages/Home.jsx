@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useSeo, useReveal } from "../lib/hooks.js";
 import { useLang, L } from "../i18n.jsx";
 import { PRODUCTS, DOMAINES } from "../data/content.js";
+import { PARENT, PARTNER_ROLES } from "../data/site.js";
 import CtaBand from "../components/CtaBand.jsx";
+import PhotoFrame from "../components/PhotoFrame.jsx";
 import { IconArrowRight, IconCheck } from "../lib/icons.jsx";
 import "./Home.css";
 
@@ -101,15 +103,15 @@ export default function Home() {
             </p>
             <p>
               {t(
-                "Notre chevron divise par dix le temps de pose des panneaux face aux solutions actuelles, tandis que nos pieux d'ancrage expansifs remplacent le béton coulé par un ancrage mécanique contrôlé par essai, et notre structure est dimensionnée en fonction de votre site et de votre situation géographique.",
-                "Our rafter divides panel installation time by ten compared with current solutions, while our expanding anchor piles replace poured concrete with mechanical anchoring verified by pull-out testing, and our structure is sized according to your site and its geographic location."
+                "Notre chevron autobloquant annule presque totalement le temps de pose des panneaux, tandis que nos pieux d'ancrage expansifs remplacent le béton coulé par un ancrage mécanique dont la tenue peut être vérifiée par essai sur site, et notre structure est dimensionnée en fonction de votre site et de votre situation géographique.",
+                "Our self-locking rafter almost entirely removes panel installation time, while our expanding anchor piles replace poured concrete with mechanical anchoring whose hold can be verified by on-site testing, and our structure is sized according to your site and its geographic location."
               )}
             </p>
           </div>
           <ul className="intro__list reveal">
             {[
-              t("Chevron — pose divisée par 10", "Rafter — install time ÷ 10"),
-              t("Pieux d'ancrage L, XL, XXL", "Anchor piles L, XL, XXL"),
+              t("Chevron — blocage des panneaux sans aucune fixation", "Rafter — panels held without any fixing"),
+              t("Pieux tous terrains et pieux sable, en L, XL et XXL", "All-terrain and sand piles, in L, XL and XXL"),
               t("Structures porteuses réglables, galvanisées", "Adjustable, galvanised structures"),
               t("Plans, notices d'essais et notes de calculs", "Drawings, test notices and calculation notes"),
             ].map((t2) => (
@@ -119,8 +121,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PRODUCTS */}
+      {/* PARTENAIRE — section 1 of the client's document (pp. 2-5). The photo
+          frames stand in for the four captioned boxes he laid out there. */}
       <section className="section section--soft">
+        <div className="container">
+          <div className="section-head center reveal">
+            <span className="eyebrow">{t("Partenaire", "Partner")}</span>
+            <h2>{t("Les Clés Solaires au sein de la SAS ENCOME", "Les Clés Solaires within SAS ENCOME")}</h2>
+            <p>
+              {t(
+                `La ${PARENT.name}, ${PARENT.activity.fr.toLowerCase()}, intègre en son sein le domaine des structures solaires nommé « Les Clés Solaires ».`,
+                `${PARENT.name}, a ${PARENT.activity.en.toLowerCase()}, houses within it the solar-structures business named “Les Clés Solaires”.`
+              )}
+            </p>
+          </div>
+          <div className="grid grid-2">
+            {PARTNER_ROLES.map((p) => (
+              <article className="card reveal" key={p.key}>
+                <h3>{p.name}</h3>
+                <p>{t(p.text.fr, p.text.en)}</p>
+              </article>
+            ))}
+          </div>
+          <div className="grid grid-4" style={{ marginTop: 28 }}>
+            {PARTNER_ROLES.flatMap((p) => p.photos).map((ph) => (
+              <PhotoFrame key={ph.fr} caption={t(ph.fr, ph.en)} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRODUCTS */}
+      <section className="section">
         <div className="container">
           <div className="section-head center reveal">
             <span className="eyebrow">{t("Nos produits", "Our products")}</span>
@@ -148,18 +180,18 @@ export default function Home() {
       </section>
 
       {/* CHEVRON HIGHLIGHT */}
-      <section className="section">
+      <section className="section section--soft">
         <div className="container refprev">
           <div className="refprev__media reveal">
             <img src="/media/chevron-blocage.webp" alt={t("Chevron de blocage des panneaux photovoltaïques", "Rafter clamping photovoltaic panels")} loading="lazy" />
           </div>
           <div className="refprev__text reveal">
             <span className="eyebrow">{t("Produit phare", "Flagship product")}</span>
-            <h2>{t("Le chevron qui divise le temps de pose par 10", "The rafter that divides install time by 10")}</h2>
+            <h2>{t("Le chevron qui bloque les panneaux sans aucune fixation", "The rafter that holds panels without any fixing")}</h2>
             <p className="lead">
               {t(
-                "Une seule vis par chevron en portrait, deux en paysage, contre huit crapauds pour les solutions concurrentes. Le démontage d'un panneau se fait en quelques secondes.",
-                "Just one screw per rafter in portrait, two in landscape, versus eight clamps for competing solutions. A panel can be removed in seconds."
+                "Deux profils coulissants bloquent les panneaux sans aucune fixation : une fois tous les panneaux en place, un seul écrou bloque l'ensemble. Ces profils sont eux-mêmes des éléments de la structure porteuse et remplacent les systèmes d'intégration classiques à crapauds.",
+                "Two sliding profiles lock the panels without any fixing: once every panel is in place, a single nut locks the whole set. Those profiles are themselves part of the load-bearing structure and replace classic clamp-based integration systems."
               )}
             </p>
             <L to="/chevrons" className="btn btn--primary">
@@ -175,7 +207,7 @@ export default function Home() {
           <div className="section-head reveal">
             <span className="eyebrow">{t("Domaines d'intervention", "Fields of application")}</span>
             <h2>{t("Des panneaux photovoltaïques de tout type", "Photovoltaic panels of every kind")}</h2>
-            <p>{t("Champs solaires, ombrières, agrivoltaïsme, toitures et ferrovoltaïsme.", "Solar fields, canopies, agrivoltaics, roofs and rail photovoltaics.")}</p>
+            <p>{t("Champs solaires, ombrières, agrivoltaïsme et ferrovoltaïsme — de la conception à la mise en œuvre.", "Solar fields, canopies, agrivoltaics and rail photovoltaics — from design through to implementation.")}</p>
           </div>
           <div className="grid grid-4">
             {DOMAINES.map((d) => (
