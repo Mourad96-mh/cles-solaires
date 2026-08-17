@@ -13,7 +13,10 @@
   margin-bottom: 18px;
 }
 .brand--footer { color: #fff; margin-bottom: 16px; }
-.brand--footer .brand__logo { height: 96px; }
+/* Bumped alongside the header lockup, by the same tenth, so the two keep the
+   ratio they had. Nothing constrains it here — the brand column is a grid cell,
+   not a fixed bar — so the tagline below simply moves down. */
+.brand--footer .brand__logo { height: 106px; }
 .footer__tag { color: #9fb3bf; max-width: 340px; font-size: 0.95rem; }
 .footer__tagline {
   margin-top: 12px;
