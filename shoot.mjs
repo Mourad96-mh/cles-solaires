@@ -28,6 +28,7 @@ const browser = await puppeteer.launch({
   executablePath: EDGE,
   headless: "new",
   args: ["--hide-scrollbars"],
+  protocolTimeout: 120000,
 });
 
 for (const p of profiles) {
@@ -54,9 +55,13 @@ for (const p of profiles) {
         `.hero__inner{min-height:${heroPx}px!important;}`,
     });
     // The clip capture doesn't scroll, so below-fold loading="lazy" images would
-    // stay blank. Scroll through the whole page to trigger native lazy-loading,
-    // return to top, then wait for every image to fully decode.
-    await page.evaluate(async () => {
+    // stay blank. Flip them to eager, scroll the whole page anyway (some are only
+    // laid out once their section is reached), then wait for every image to decode.
+    // Chromium never starts the fetch for a lazy image whose ancestor is still at
+    // opacity 0 — the pre-reveal state of .reveal sections — so relying on the
+    // scroll alone leaves those images pending forever and hangs this evaluate.
+    const stalled = await page.evaluate(async () => {
+      for (const i of document.querySelectorAll('img[loading="lazy"]')) i.loading = "eager";
       await new Promise((res) => {
         let y = 0;
         const step = () => {
@@ -68,13 +73,22 @@ for (const p of profiles) {
         step();
       });
       const imgs = [...document.querySelectorAll("img")];
+      const late = [];
       await Promise.all(
         imgs.map(async (i) => {
-          if (!i.complete) await new Promise((r) => { i.onload = i.onerror = r; });
-          try { await i.decode(); } catch {}
+          // Cap the wait: one image that never resolves must not stall the run.
+          const done = (async () => {
+            if (!i.complete) await new Promise((r) => { i.onload = i.onerror = r; });
+            try { await i.decode(); } catch {}
+            return true;
+          })();
+          const ok = await Promise.race([done, new Promise((r) => setTimeout(() => r(false), 15000))]);
+          if (!ok || !i.naturalWidth) late.push(i.currentSrc || i.src);
         })
       );
+      return late;
     });
+    if (stalled.length) console.warn(`  ! ${name}: image(s) not loaded -> ${stalled.join(", ")}`);
     await new Promise((r) => setTimeout(r, 400));
     const file = `${p.dir}/${name}.png`;
     // Manual clip keeps the layout viewport fixed so vh-based heights (e.g. hero
