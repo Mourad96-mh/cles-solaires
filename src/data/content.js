@@ -19,7 +19,11 @@ export const PRODUCTS = [
     key: "pieu",
     to: "/pieux",
     icon: IconAnchor,
-    image: "/media/pieu-acier.jpg",
+    /* Was pieu-acier.jpg — a bundle of galvanised profiles lying on the ground.
+       The client drew an arrow to it and wrote "CHEVRONS" (scan of 10/08/2026,
+       p. 4): the pile card was illustrated with rafter stock. This shot is a
+       real pile head in the ground, with the adjustment collar he named. */
+    image: "/media/ref-pieu-ancrage.jpg",
     title: { fr: "Le Pieu d'ancrage", en: "The Anchor Pile" },
     tagline: {
       fr: "Fondation par ancrage mécanique expansif, sans béton coulé.",
@@ -38,7 +42,11 @@ export const PRODUCTS = [
     key: "structure",
     to: "/structures",
     icon: IconBuilding,
-    image: "/media/hero-carport.jpg",
+    /* "Pas la bonne photo" (scan of 10/08/2026, pp. 5 and 24). The carport shot
+       he struck out showed a finished ombrière with a scissor lift; the picture
+       he pasted over it is this one — the load-bearing frame itself, posts and
+       bracing, which is what the card is about. */
+    image: "/media/ref-agrivoltaique.jpg",
     title: { fr: "La Structure", en: "The Structure" },
     tagline: {
       fr: "Ossature porteuse galvanisée, réglable, conçue selon le domaine d'application.",
@@ -338,7 +346,9 @@ export const REFERENCES = [
   { key: "ombriere-pente", type: { fr: "Ombrière photovoltaïque", en: "Photovoltaic canopy" }, place: { fr: "La Réunion", en: "Réunion Island" }, image: "/media/ref-ombriere-pente.jpg" },
   { key: "ossature", type: { fr: "Ossature métallique", en: "Steel frame" }, place: { fr: "La Réunion", en: "Réunion Island" }, image: "/media/ref-ossature-metallique.jpg" },
   { key: "structure-porteuse", type: { fr: "Structure porteuse", en: "Load-bearing structure" }, place: { fr: "La Réunion", en: "Réunion Island" }, image: "/media/ref-structure-porteuse.jpg" },
-  { key: "pieu-ancrage", type: { fr: "Pieu d'ancrage", en: "Anchor pile" }, place: { fr: "La Réunion", en: "Réunion Island" }, image: "/media/ref-pieu-ancrage.jpg" },
+  // "avec système de réglage" — the client's addition on this caption (scan of
+  // 10/08/2026, p. 40): the shot shows the adjustment collar, not a bare pile.
+  { key: "pieu-ancrage", type: { fr: "Pieu d'ancrage avec système de réglage", en: "Anchor pile with adjustment system" }, place: { fr: "La Réunion", en: "Réunion Island" }, image: "/media/ref-pieu-ancrage.jpg" },
   { key: "parc-pv", type: { fr: "Parc photovoltaïque", en: "Photovoltaic park" }, place: { fr: "La Réunion", en: "Réunion Island" }, image: "/media/ref-parc-pv.jpg" },
   { key: "panneaux-mono", type: { fr: "Panneaux monocristallins", en: "Monocrystalline panels" }, place: { fr: "La Réunion", en: "Réunion Island" }, image: "/media/ref-panneaux-mono.jpg" },
   { key: "sous-structure", type: { fr: "Sous-face de structure", en: "Underside of the structure" }, place: { fr: "La Réunion", en: "Réunion Island" }, image: "/media/ref-sous-structure.webp" },

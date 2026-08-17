@@ -60,9 +60,29 @@ export const PARTNER_ROLES = [
       fr: "S'agissant de brevets, Les Clés Solaires interviennent directement dans l'étude, la fabrication et la livraison jusque sur le site de montage des pieux d'ancrages et des chevrons autobloquants.",
       en: "As the patent holder, Les Clés Solaires is directly involved in the design, manufacture and delivery — right to the assembly site — of the anchor piles and the self-locking rafters.",
     },
+    /* `image` fills the frame; without it the slot stays a captioned
+       placeholder. Only real photographs of the real product go here — not the
+       illustration used as the Chevrons hero (chevron-blocage.webp is a drawing)
+       and not the workshop scale model (chevron-atelier.jpg). */
     photos: [
-      { fr: "Pieu d'ancrage", en: "Anchor pile" },
-      { fr: "Chevron autobloquant", en: "Self-locking rafter" },
+      {
+        fr: "Pieu d'ancrage",
+        en: "Anchor pile",
+        image: "/media/pieu-entretoise.webp",
+        alt: {
+          fr: "Tête d'un pieu d'ancrage en place, équipée de son entretoise de montage et de sa tige d'allonge",
+          en: "Head of an anchor pile in place, fitted with its mounting spacer and extension rod",
+        },
+      },
+      {
+        fr: "Chevron autobloquant",
+        en: "Self-locking rafter",
+        image: "/media/chevron-avant-blocage-poster.webp",
+        alt: {
+          fr: "Chevron autobloquant galvanisé en place sous des panneaux photovoltaïques",
+          en: "Galvanised self-locking rafter in place under photovoltaic panels",
+        },
+      },
     ],
   },
   {
@@ -73,8 +93,28 @@ export const PARTNER_ROLES = [
       en: "SAS ENCOME is a metal construction company handling the manufacture and delivery — right to the assembly site — of the load-bearing structures between the ground anchors and the rafters carrying the photovoltaic panels.",
     },
     photos: [
-      { fr: "Structures solaires", en: "Solar structures" },
-      { fr: "Constructions diverses ENCOME", en: "Other ENCOME constructions" },
+      {
+        fr: "Structures solaires",
+        en: "Solar structures",
+        image: "/media/ref-structure-porteuse.jpg",
+        alt: {
+          fr: "Sous-face d'une centrale photovoltaïque : poteaux, contreventements et structure porteuse des panneaux",
+          en: "Underside of a photovoltaic plant: posts, bracing and the structure carrying the panels",
+        },
+      },
+      /* Sent by the client on 11/08/2026 (Scan2026-08-11_144817.pdf), the last
+         of the four frames to be filled. Extracted from the single JPEG the
+         scan embeds and cropped to the photograph — it is a scan of a print,
+         so the grain is the source's own. */
+      {
+        fr: "Constructions diverses ENCOME",
+        en: "Other ENCOME constructions",
+        image: "/media/encome-charpente.webp",
+        alt: {
+          fr: "Charpente métallique d'un bâtiment en construction : poteaux, portiques, contreventements en croix et pannes de toiture sur dalle béton",
+          en: "Steel frame of a building under construction: columns, portal frames, cross-bracing and roof purlins on a concrete slab",
+        },
+      },
     ],
   },
 ];
@@ -85,11 +125,15 @@ export const NAV = [
   {
     fr: "Produits",
     en: "Products",
+    /* Pile, then structure, then rafter — the client's arrows on the footer nav
+       (scan of 10/08/2026) and on the accueil bullet list put the pile first,
+       matching the "Pieu · Structure · Chevron" tagline. Both products are
+       patented: "le pieu est également breveté" (scan p. 28). */
     children: [
       { to: "/produits", fr: "Tous nos produits", en: "All our products" },
-      { to: "/chevrons", fr: "Chevrons (breveté)", en: "Rafters (patented)" },
+      { to: "/pieux", fr: "Pieux d'ancrage (breveté)", en: "Anchor piles (patented)" },
       { to: "/structures", fr: "Structures", en: "Structures" },
-      { to: "/pieux", fr: "Pieux d'ancrage", en: "Anchor piles" },
+      { to: "/chevrons", fr: "Chevrons (breveté)", en: "Rafters (patented)" },
     ],
   },
   { to: "/references", fr: "Références", en: "References" },
@@ -100,9 +144,9 @@ export const NAV = [
 export const NAV_FLAT = [
   { to: "/", fr: "Accueil", en: "Home" },
   { to: "/produits", fr: "Nos produits", en: "Our products" },
-  { to: "/chevrons", fr: "Chevrons", en: "Rafters" },
-  { to: "/structures", fr: "Structures", en: "Structures" },
   { to: "/pieux", fr: "Pieux d'ancrage", en: "Anchor piles" },
+  { to: "/structures", fr: "Structures", en: "Structures" },
+  { to: "/chevrons", fr: "Chevrons", en: "Rafters" },
   { to: "/references", fr: "Références", en: "References" },
   { to: "/contact", fr: "Contact", en: "Contact" },
 ];

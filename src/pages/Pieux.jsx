@@ -33,7 +33,9 @@ export default function Pieux() {
   ];
 
   const GEAR = [
-    t("Machine de forage légère portée sur remorque, automobile ou tractée par une voiture", "Light drilling machine on a trailer, self-propelled or towed by a car"),
+    // "ou fixée sur boule d'attelage" added by the client (scan of 10/08/2026,
+    // p. 18) — the case his own photo of the van-mounted rig illustrates.
+    t("Machine de forage légère portée sur remorque, automobile, tractée par une voiture ou fixée sur boule d'attelage", "Light drilling machine on a trailer, self-propelled, towed by a car or mounted on a tow ball"),
     t("Forets courants à béton, le forage s'exécutant à sec ; système de percussion en option", "Standard concrete drill bits, drilling done dry; percussion system optional"),
     t("Vérin creux de puissance définie selon le pieu, et entretoise de montage fournie", "Hollow jack sized for the pile, and the mounting spacer supplied"),
     t("Pompe manuelle ou électrique avec manomètre, compatible avec le vérin", "Manual or electric pump with a pressure gauge, compatible with the jack"),
@@ -42,7 +44,10 @@ export default function Pieux() {
 
   const BENEFITS = [
     t("Forage et mise en œuvre rapides : le temps de pose dépend du diamètre et de la profondeur de forage, pas du terrain", "Fast drilling and installation: time depends on borehole diameter and depth, not on the ground"),
-    t("Matériel de forage courant, utilisé partout dans le monde par les entreprises de forage de puits", "Standard drilling equipment, used worldwide by well-drilling companies"),
+    // The geotechnical design offices were dropped when this bullet was
+    // condensed; the client wrote them back in (scan of 10/08/2026, p. 10) and
+    // his source document names them first (Scan2026-08-01_105630.pdf, p. 8).
+    t("Matériel de forage courant, utilisé partout dans le monde par les bureaux d'études géotechniques et les entreprises de forage de puits", "Standard drilling equipment, used worldwide by geotechnical design offices and well-drilling companies"),
     t("Forte tenue aux actions climatiques : neige, vent jusqu'au vent cyclonique, séisme", "Strong resistance to climatic actions: snow, wind up to cyclonic wind, earthquake"),
     t("Rallonge disponible pour atteindre une terre plus compacte en profondeur", "Extension available to reach more compact soil deeper down"),
     t("Dépose réversible — le terrain retrouve son aspect d'origine", "Reversible removal — the site returns to its original state"),
@@ -51,8 +56,11 @@ export default function Pieux() {
 
   return (
     <>
+      {/* "Supprimer BREVETÉ ou le mettre aussi sur pieux — le pieu est également
+          breveté" (scan of 10/08/2026, p. 28); he wrote "BREVETÉ" beside this
+          very eyebrow on p. 9. Both products carry it now. */}
       <PageHero
-        eyebrow={t("Produit", "Product")}
+        eyebrow={t("Produit breveté", "Patented product")}
         title={t("Les pieux d'ancrage", "Anchor piles")}
         text={t(
           "Deux types de pieux : le pieu tous terrains, positionné dans un trou foré, et le pieu sable, posé par battage sans aucun forage. Dans les deux cas, des pelles se déploient à la base pour ancrer le pieu — sans béton coulé.",
@@ -64,28 +72,90 @@ export default function Pieux() {
 
       {/* Description */}
       <section className="section">
-        <div className="container split">
-          <div className="split__text reveal">
-            <span className="eyebrow">{t("Description technique", "Technical description")}</span>
-            <h2>{t("Qu'est-ce qu'un pieu d'ancrage ?", "What is an anchor pile?")}</h2>
-            <p>
-              {t(
-                "Le pieu a pour fonction d'immobiliser la structure sous les actions climatiques exercées sur les panneaux, en particulier la neige et le vent. Il est enfoncé dans un trou foré selon ses dimensions.",
-                "The pile's role is to hold the structure against the climatic actions on the panels, in particular snow and wind. It is driven into a hole bored to its dimensions."
-              )}
-            </p>
-            <p>
-              {t(
-                "Un vérin creux exerce une charge de précontrainte définie, qui entraîne le déploiement de deux pelles situées à la base du pieu. Ces pelles s'opposent directement aux charges de traction et de pression exercées sur le pieu. Trois modèles couvrent les charges légères, moyennes et lourdes ; des modèles personnalisés peuvent être étudiés.",
-                "A hollow jack applies a defined preload, which deploys two blades at the base of the pile. Those blades directly oppose the tension and compression loads applied to the pile. Three models cover light, medium and heavy loads; custom models can be studied."
-              )}
-            </p>
-            <ul className="checklist">
-              {BENEFITS.slice(0, 3).map((b) => <li key={b}><IconCheck /> {b}</li>)}
-            </ul>
+        <div className="container">
+          <div className="split">
+            <div className="split__text reveal">
+              <span className="eyebrow">{t("Description technique", "Technical description")}</span>
+              <h2>{t("Qu'est-ce qu'un pieu d'ancrage ?", "What is an anchor pile?")}</h2>
+              <p>
+                {t(
+                  "Le pieu a pour fonction d'immobiliser la structure sous les actions climatiques exercées sur les panneaux, en particulier la neige et le vent. Il est enfoncé dans un trou foré selon ses dimensions.",
+                  "The pile's role is to hold the structure against the climatic actions on the panels, in particular snow and wind. It is driven into a hole bored to its dimensions."
+                )}
+              </p>
+              <p>
+                {t(
+                  "Un vérin creux exerce une charge de précontrainte définie, qui entraîne le déploiement de deux pelles situées à la base du pieu. Ces pelles s'opposent directement aux charges de traction et de pression exercées sur le pieu. Trois modèles couvrent les charges légères, moyennes et lourdes ; des modèles personnalisés peuvent être étudiés.",
+                  "A hollow jack applies a defined preload, which deploys two blades at the base of the pile. Those blades directly oppose the tension and compression loads applied to the pile. Three models cover light, medium and heavy loads; custom models can be studied."
+                )}
+              </p>
+              <ul className="checklist">
+                {BENEFITS.slice(0, 3).map((b) => <li key={b}><IconCheck /> {b}</li>)}
+              </ul>
+            </div>
+            {/* "VIDÉO DU PIEU" — the client marked this slot for a video of the
+                pile itself (scan of 10/08/2026, p. 10) and sent this clip on
+                15/08. It shows the blade linkage worked by hand, above ground:
+                a demonstration, not an installation, so the caveat below says
+                so rather than letting the shot read as a pile going in. */}
+            <div className="split__media split__media--tall reveal">
+              <video
+                muted
+                loop
+                playsInline
+                controls
+                preload="metadata"
+                poster="/media/pieu-pelles-terrain-poster.webp"
+                aria-label={t(
+                  "Vidéo : les deux pelles articulées en pied de pieu, ouvertes puis refermées à la main",
+                  "Video: the two hinged blades at the foot of the pile, opened then closed by hand"
+                )}
+              >
+                <source src="/media/pieu-pelles-terrain.mp4" type="video/mp4" />
+              </video>
+            </div>
           </div>
-          <div className="split__media split__media--tall reveal">
-            <img src="/media/pieu-ancrage.webp" alt={t("Mise en traction d'un pieu d'ancrage : vérin creux hydraulique, manomètre et comparateur sur le chantier", "Anchor pile being tensioned: hollow hydraulic jack, pressure gauge and dial indicator on site")} loading="lazy" />
+          <p className="caveat reveal" style={{ maxWidth: 780 }}>
+            {t(
+              "Démonstration hors sol : les pelles sont ici ouvertes et refermées à la main pour montrer l'articulation. En place, ce sont la traction du vérin et la résistance du terrain qui les déploient.",
+              "Above-ground demonstration: the blades are opened and closed by hand here to show the linkage. In place, it is the jack's pull and the ground's resistance that deploy them."
+            )}
+          </p>
+
+          {/* Workshop prototype. The client sent this video (e-mail 05/08/2026)
+              with his own warning that the part is unfinished. That warning is
+              reproduced verbatim below and must travel with the video wherever
+              it is reused — it is what keeps the shot from reading as a
+              finished product. */}
+          <div className="split" style={{ marginTop: 72 }}>
+            <div className="split__media split__media--tall reveal">
+              <video
+                muted
+                loop
+                playsInline
+                controls
+                preload="metadata"
+                poster="/media/pieu-essai-atelier-poster.webp"
+              >
+                <source src="/media/pieu-essai-atelier.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div className="split__text reveal">
+              <span className="eyebrow">{t("Prototype d'essai", "Test prototype")}</span>
+              <h3>{t("Le mécanisme, vu en atelier", "The mechanism, seen in the workshop")}</h3>
+              <p>
+                {t(
+                  "Un pieu d'essai monté sur l'établi, qui laisse voir l'articulation des pelles avant toute mise en terre.",
+                  "A test pile assembled on the bench, showing the linkage of the blades before any installation in the ground."
+                )}
+              </p>
+              <p className="caveat">
+                {t(
+                  "Prototype d'essai en atelier : la pièce n'est pas finie, elle n'est pas galvanisée et les boulons utilisés ne sont pas à la bonne longueur.",
+                  "Workshop test prototype: the part is not finished — it is not galvanised, and the bolts used are not the right length."
+                )}
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -217,7 +287,152 @@ export default function Pieux() {
             </ol>
           </div>
 
-          <div className="split reveal" style={{ marginBottom: 56 }}>
+          {/* The client's own CAD sequence, titled by hand "Pose et blocage du
+              pieu" (scan of 10/08/2026, p. 17). The seven drawings had been
+              sitting unused in public/media/methode/. He struck out the step
+              numbers the site printed over them — his drawings carry their own
+              order — and wrote "La pose est terminée" under the pressurising
+              step, which is the point of the whole sequence: the pile is
+              anchored at that moment, and the last drawing is a separate,
+              optional test. */}
+          <h3 className="reveal" style={{ marginTop: 56 }}>
+            {t("Pose et blocage du pieu", "Installing and locking the pile")}
+          </h3>
+          <div className="schemas schemas--2 reveal" style={{ marginTop: 24 }}>
+            {[
+              {
+                src: "/media/methode/01-plaque-assise.webp",
+                alt: t("Plaque d'assise boulonnée sur la tête de pieu par deux boulons M10×80, écrou non serré",
+                       "Bearing plate bolted to the pile head with two M10×80 bolts, nut left loose"),
+                cap: t("Montage de la plaque d'assise et boulonnage sur la tête de pieu. Elle peut être remplacée par un UPN 80 ou 100.",
+                       "Fitting the bearing plate and bolting it to the pile head. It can be replaced by a UPN 80 or 100."),
+              },
+              {
+                src: "/media/methode/02-positionnement.webp",
+                alt: t("Pieu équipé descendu dans le trou foré, réglage de position en XX et en YY",
+                       "Equipped pile lowered into the bored hole, position adjusted in XX and YY"),
+                cap: t("Présentation du pieu équipé dans le trou et positionnement selon les coordonnées théoriques.",
+                       "Presenting the equipped pile in the hole and positioning it to the theoretical coordinates."),
+              },
+              {
+                src: "/media/methode/03-modele-entretoise.webp",
+                alt: t("Modèle de pose de 200 à 250 mm et entretoise de montage centrés sur la tête de pieu",
+                       "200 to 250 mm setting jig and mounting spacer centred on the pile head"),
+                cap: t("Pose du modèle et de l'entretoise de montage, centrés au mieux sur la tête de pieu.",
+                       "Fitting the setting jig and the mounting spacer, centred as closely as possible on the pile head."),
+              },
+              {
+                src: "/media/methode/04-tige-allonge.webp",
+                alt: t("Tige d'allonge engagée par son côté à écrou double soudé et boulonnée sans serrage sur la tige du pieu",
+                       "Extension rod engaged by its welded double-nut side and bolted without tightening onto the pile rod"),
+                cap: t("Engagement de la tige d'allonge par le côté comportant l'écrou double soudé, puis boulonnage sans serrage sur la tête de tige du pieu.",
+                       "Engaging the extension rod by the side carrying the welded double nut, then bolting it — without tightening — onto the pile's rod head."),
+              },
+              {
+                src: "/media/methode/05-verin-creux.webp",
+                alt: t("Vérin creux posé sur l'entretoise, la tige d'allonge passant dans son trou central",
+                       "Hollow jack set on the spacer, the extension rod passing through its central bore"),
+                cap: t("Mise en place du vérin creux sur l'entretoise : la tige d'allonge passe dans son trou central. Cale et écrou sont installés sur la tige — le serrage est inutile.",
+                       "Setting the hollow jack on the spacer: the extension rod passes through its central bore. Shim and nut are fitted on the rod — no tightening is needed."),
+              },
+              {
+                src: "/media/methode/06-mise-pression.webp",
+                alt: t("Vérin en pression alimenté par la pompe manuelle et son manomètre ; en fond de trou, les pelles s'écartent",
+                       "Jack under pressure fed by the hand pump and its gauge; at the bottom of the hole, the blades spread apart"),
+                cap: t("Le vérin est mis en pression jusqu'à la charge de traction définie pour le modèle. Sous l'effort, les pelles s'écartent et ancrent le pieu dans le sol.",
+                       "The jack is pressurised up to the tension load defined for the model. Under that load, the blades spread apart and anchor the pile in the ground."),
+                done: true,
+              },
+            ].map((s) => (
+              <figure className="schema" key={s.src}>
+                <div className="schema__media">
+                  <img src={s.src} alt={s.alt} loading="lazy" />
+                </div>
+                <figcaption>
+                  {s.cap}
+                  {s.done && <> <strong>{t("La pose est terminée.", "Installation is complete.")}</strong></>}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          {/* The seventh drawing of the client's sequence covers this step, but
+              it carries an AutoCAD tooltip burnt into the image and cannot be
+              published as is. This photograph shows the same set-up for real —
+              jack on the test chaise, comparator on top, gauge in the
+              foreground — and is the only shot of it on the site. */}
+          <div className="split" style={{ marginTop: 56 }}>
+            <div className="split__text reveal">
+              <span className="eyebrow">{t("Essai d'arrachement", "Pull-out test")}</span>
+              <h3>{t("Vérifier la tenue sur le site même", "Verifying the hold on site itself")}</h3>
+              <p>
+                {t(
+                  "Après décompression du vérin et dépose de la tige d'allonge et de l'entretoise, le pieu est repris sur une chaise d'essai calée de part et d'autre. Le pompage reprend jusqu'au déplacement maximal admis, que le comparateur mesure.",
+                  "Once the jack is released and the extension rod and spacer removed, the pile is taken up on a test frame shimmed on either side. Pumping resumes up to the maximum admitted displacement, which the dial gauge measures."
+                )}
+              </p>
+            </div>
+            <div className="split__media split__media--tall reveal">
+              <img
+                src="/media/pieu-ancrage.webp"
+                alt={t("Montage d'essai d'arrachement : vérin creux jaune sur la chaise d'essai, comparateur au-dessus, manomètre au premier plan et foreuse en arrière-plan", "Pull-out test set-up: yellow hollow jack on the test frame, dial gauge above, pressure gauge in the foreground and drilling rig behind")}
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* Photographed on site, 23/05/2025. These three cover the tensioning
+              operation only — step 01, the pile going into the bored hole, has
+              no picture yet, so the sequence starts at the spacer. */}
+          <div className="shots shots--3 reveal">
+            <figure className="shot">
+              <div className="shot__media">
+                <img
+                  src="/media/pieu-entretoise.webp"
+                  alt={t("Tête de pieu équipée de son entretoise de montage et de sa tige d'allonge filetée", "Pile head fitted with its mounting spacer and threaded extension rod")}
+                  loading="lazy"
+                />
+              </div>
+              <figcaption>
+                {t(
+                  "L'entretoise de montage et la tige d'allonge en place sur la tête de pieu, avant pose du vérin.",
+                  "The mounting spacer and extension rod in place on the pile head, before the jack is fitted."
+                )}
+              </figcaption>
+            </figure>
+            <figure className="shot">
+              <div className="shot__media">
+                <img
+                  src="/media/verin-creux-en-place.webp"
+                  alt={t("Vérin creux hydraulique monté sur l'entretoise au-dessus de la tête de pieu, flexible raccordé", "Hollow hydraulic jack mounted on the spacer above the pile head, hose connected")}
+                  loading="lazy"
+                />
+              </div>
+              <figcaption>
+                {t(
+                  "Le vérin creux monté sur l'entretoise, son flexible hydraulique raccordé.",
+                  "The hollow jack mounted on the spacer, its hydraulic hose connected."
+                )}
+              </figcaption>
+            </figure>
+            <figure className="shot">
+              <div className="shot__media">
+                <img
+                  src="/media/pompe-verin.webp"
+                  alt={t("Opérateur actionnant la pompe hydraulique manuelle reliée au vérin, manomètre en ligne", "Operator working the manual hydraulic pump connected to the jack, gauge in line")}
+                  loading="lazy"
+                />
+              </div>
+              <figcaption>
+                {t(
+                  "La mise en pression à la pompe manuelle : le manomètre en ligne donne la charge appliquée.",
+                  "Applying pressure with the hand pump: the in-line gauge reads the load applied."
+                )}
+              </figcaption>
+            </figure>
+          </div>
+
+          <div className="split reveal" style={{ marginTop: 64, marginBottom: 56 }}>
             <div className="split__text">
               <ul className="checklist">
                 <li><IconCheck /> {t("Ancrage mécanique par pelles pivotantes", "Mechanical anchoring by pivoting blades")}</li>
@@ -236,16 +451,67 @@ export default function Pieux() {
 
       {/* Gear + benefits */}
       <section className="section section--soft">
-        <div className="container split split--reverse">
-          <div className="split__media split__media--tall reveal">
-            <img src="/media/pose-pieu.webp" alt={t("Pieu métallique positionné verticalement dans le trou foré par un opérateur", "Steel pile held vertically in the bored hole by an operator")} loading="lazy" />
-          </div>
-          <div className="split__text reveal">
+        <div className="container">
+          {/* The stock illustration that stood beside this list — a figure in a
+              hard hat next to a cutaway pile — was crossed out by the client
+              (scan of 10/08/2026, p. 18). The real machines below replace it. */}
+          <div className="section-head reveal">
             <span className="eyebrow">{t("Matériel léger", "Light equipment")}</span>
             <h2>{t("Le matériel de forage et de pose", "Drilling and installation equipment")}</h2>
-            <ul className="checklist">
-              {GEAR.map((g) => <li key={g}><IconCheck /> {g}</li>)}
-            </ul>
+          </div>
+          <ul className="checklist reveal">
+            {GEAR.map((g) => <li key={g}><IconCheck /> {g}</li>)}
+          </ul>
+
+          {/* Shown uncropped at the client's insistence — "photos entières,
+              l'intérêt c'est la machine pas l'ouvrier" (pp. 18-19). Every fixed
+              frame cut the drilling mast, which is the subject. */}
+          <div className="shots shots--3 reveal">
+            <figure className="shot">
+              <div className="shot__media shot__media--whole">
+                <img
+                  src="/media/foreuse-attelage.webp"
+                  alt={t("Machine de forage légère montée sur rail à l'arrière d'un fourgon, opérateur engageant le train de tiges", "Light drilling rig mounted on a rail at the back of a van, operator engaging the rod string")}
+                  loading="lazy"
+                />
+              </div>
+              <figcaption>
+                {t(
+                  "Une machine de forage légère portée par un véhicule, mise en œuvre directement depuis l'arrière du fourgon.",
+                  "A light drilling rig carried by a vehicle and worked straight from the back of the van."
+                )}
+              </figcaption>
+            </figure>
+            <figure className="shot">
+              <div className="shot__media shot__media--whole">
+                <img
+                  src="/media/foreuse-autonome.webp"
+                  alt={t("Machine de forage autonome sur chenilles, mât dressé, posée sur son embase", "Self-propelled tracked drilling rig, mast raised, set on its baseplate")}
+                  loading="lazy"
+                />
+              </div>
+              <figcaption>
+                {t(
+                  "Une machine de forage autonome sur chenilles, mât dressé sur son embase.",
+                  "A self-propelled tracked drilling rig, mast raised on its baseplate."
+                )}
+              </figcaption>
+            </figure>
+            <figure className="shot">
+              <div className="shot__media shot__media--whole">
+                <img
+                  src="/media/foreuse-autonome-forage.webp"
+                  alt={t("Forage en cours : l'opérateur guide le train de tiges de la machine autonome", "Drilling under way: the operator guides the rod string of the self-propelled rig")}
+                  loading="lazy"
+                />
+              </div>
+              <figcaption>
+                {t(
+                  "Le forage en cours, exécuté à sec : l'opérateur guide le train de tiges.",
+                  "Drilling under way, done dry: the operator guides the rod string."
+                )}
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>

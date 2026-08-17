@@ -3,7 +3,7 @@ import { useLang } from "../i18n.jsx";
 import { CHEVRON_LAYOUTS, CHEVRON_TYPES, CHEVRON_FIGURES } from "../data/content.js";
 import PageHero from "../components/PageHero.jsx";
 import CtaBand from "../components/CtaBand.jsx";
-import { IconCheck, IconBolt, IconClock, IconGauge, IconArrowRight } from "../lib/icons.jsx";
+import { IconCheck, IconBolt, IconClock, IconGauge } from "../lib/icons.jsx";
 import "./content.css";
 
 export default function Chevrons() {
@@ -75,8 +75,26 @@ export default function Chevrons() {
               <li><IconCheck /> {t("Les 2 éléments du chevron sont protégés par galvanisation", "Both rafter elements are protected by galvanising")}</li>
             </ul>
           </div>
-          <div className="split__media reveal">
-            <img src="/media/chevron-blocage.webp" alt={t("Chevrons de blocage des panneaux photovoltaïques", "Rafters clamping photovoltaic panels")} loading="lazy" />
+          {/* This still was already the hero of this same page — the identical
+              picture twice before the first scroll. The video earns the slot
+              better: it is the locking screw the paragraph above describes.
+              Slowed 2.5x at ingest, as the client asked. */}
+          <div className="split__media split__media--tall reveal">
+            <video
+              muted
+              loop
+              playsInline
+              controls
+              preload="metadata"
+              poster="/media/chevron-vis-blocage-poster.webp"
+              aria-label={t(
+                "Vidéo ralentie : détail de la tige filetée et de l'écrou logés dans le profil du chevron",
+                "Slowed video: detail of the threaded rod and nut housed in the rafter profile"
+              )}
+            >
+              <source src="/media/chevron-vis-blocage.webm" type="video/webm" />
+              <source src="/media/chevron-vis-blocage.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
         <div className="container">
@@ -98,11 +116,15 @@ export default function Chevrons() {
             <h2>{t("Aucune fixation, moins de pannes, plus vite", "No fixings, fewer purlins, faster")}</h2>
             <p>{t("Là où la pose classique multiplie les fixations par crapauds, le chevron bloque les panneaux par son seul coulissement.", "Where classic installation multiplies clamp fixings, the rafter holds the panels by its sliding action alone.")}</p>
           </div>
-          <div className="reveal">
+          <div className="reveal table-scroll">
             <table className="spectable spectable--compare">
               <thead>
+                {/* "(exemple)" added by the client beside this header (scan of
+                    10/08/2026, p. 32): the rows quote one 7 m slope and one 20 m
+                    row, not a general rule, and he did not want them read as
+                    fixed specifications. */}
                 <tr>
-                  <th scope="col">{t("Critère", "Criterion")}</th>
+                  <th scope="col">{t("Critère (exemple)", "Criterion (example)")}</th>
                   <th scope="col">{t("Chevron autobloquant", "Self-locking rafter")}</th>
                   <th scope="col">{t("Pose classique actuelle", "Current classic installation")}</th>
                 </tr>
@@ -129,13 +151,62 @@ export default function Chevrons() {
           <div className="section-head center reveal">
             <span className="eyebrow">{t("La pose", "Installation")}</span>
             <h2>{t("Deux façons de mettre le panneau en place", "Two ways to put the panel in place")}</h2>
+            {/* "Dépliez chaque cas pour le détail complet, chiffres à l'appui."
+                struck out (scan of 10/08/2026, p. 33) — the disclosures below
+                are self-evident and the sentence read as a sales prompt. */}
             <p>
               {t(
-                "La pose consiste à déposer le panneau sans précaution particulière entre les chevrons, par le dessus ou par le dessous, à son emplacement. Dépliez chaque cas pour le détail complet, chiffres à l'appui.",
-                "Installation simply means laying the panel between the rafters at its position, from above or from below, without special care. Unfold each case for the full detail, figures included."
+                "La pose consiste à déposer le panneau sans précaution particulière entre les chevrons, par le dessus ou par le dessous, à son emplacement.",
+                "Installation simply means laying the panel between the rafters at its position, from above or from below, without special care."
               )}
             </p>
           </div>
+          {/* The client asked for these two in the same block (e-mail
+              05/08/2026): the panels going on, and the rafter they land in. */}
+          <div className="shots shots--2 shots--portrait reveal">
+            <figure className="shot">
+              <div className="shot__media shot__media--portrait">
+                <video
+                  muted
+                  loop
+                  playsInline
+                  controls
+                  preload="metadata"
+                  poster="/media/pose-panneaux-glisses-poster.webp"
+                >
+                  <source src="/media/pose-panneaux-glisses.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <figcaption>
+                {t(
+                  "Les panneaux glissés sur les chevrons d'une ombrière en cours de montage.",
+                  "Panels slid onto the rafters of a carport under assembly."
+                )}
+              </figcaption>
+            </figure>
+            <figure className="shot">
+              <div className="shot__media shot__media--portrait">
+                <video
+                  muted
+                  loop
+                  playsInline
+                  controls
+                  preload="metadata"
+                  poster="/media/chevron-avant-blocage-poster.webp"
+                >
+                  <source src="/media/chevron-avant-blocage.webm" type="video/webm" />
+                  <source src="/media/chevron-avant-blocage.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <figcaption>
+                {t(
+                  "Le chevron d'essai sous les panneaux : le bord du panneau repose dans le profil, avant blocage. Vidéo ralentie.",
+                  "The test rafter under the panels: the panel edge rests in the profile, before locking. Slowed video."
+                )}
+              </figcaption>
+            </figure>
+          </div>
+
           <div className="reveal">
             {CHEVRON_LAYOUTS.map((l) => (
               <details className="disclosure" key={l.key}>
@@ -214,10 +285,10 @@ export default function Chevrons() {
               </article>
             ))}
           </div>
-          <div className="docrow reveal" style={{ marginTop: 28 }}>
-            <IconArrowRight />
-            <span>{t("Descriptifs et croquis techniques disponibles sur demande — contactez-nous.", "Technical descriptions and drawings available on request — get in touch.")}</span>
-          </div>
+          {/* "Descriptifs et croquis techniques disponibles sur demande —
+              contactez-nous." struck out here (scan of 10/08/2026, p. 36). The
+              equivalent line on the pile page was left standing, and the pile
+              croquis are now published outright. */}
         </div>
       </section>
 

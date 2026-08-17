@@ -1,36 +1,21 @@
 import { Link } from "react-router-dom";
 import { COMPANY, NAV_FLAT } from "../data/site.js";
-import { REFERENCES, TAGLINE } from "../data/content.js";
+import { TAGLINE } from "../data/content.js";
 import { useLang, localizePath } from "../i18n.jsx";
-import { IconPhone, IconMail, IconMapPin } from "../lib/icons.jsx";
+import { IconMail, IconMapPin } from "../lib/icons.jsx";
 import "./Footer.css";
 
+/* The "Ils nous font confiance — nos réalisations" marquee that used to sit on
+   top of this footer was struck out by the client on every page it appeared
+   (scans of 10/08/2026, pp. 8, 21, 36, 44 and the accueil/devis supplement).
+   It rolled the reference list — Espagne, La Réunion, Bretagne — under a
+   "trusted by" claim on all 12 pages; the Références page carries them now. */
 export default function Footer() {
   const { lang, t } = useLang();
   const year = new Date().getFullYear();
-  // Repeat the list so one copy is wider than the viewport, then duplicate it
-  // so the marquee (translateX -50%) loops seamlessly.
-  const base = REFERENCES.length >= 8 ? REFERENCES : [...REFERENCES, ...REFERENCES];
-  const marquee = [...base, ...base];
 
   return (
     <footer className="footer">
-      {/* References banner */}
-      <section className="partners" aria-label={t("Nos réalisations", "Our projects")}>
-        <div className="container">
-          <p className="partners__title">{t("Ils nous font confiance — nos réalisations", "Trusted by our clients — our projects")}</p>
-        </div>
-        <div className="partners__track-wrap">
-          <div className="partners__track">
-            {marquee.map((r, i) => (
-              <span className="partners__item" key={i} aria-hidden={i >= base.length}>
-                {t(r.type.fr, r.type.en)} — {t(r.place.fr, r.place.en)}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <div className="footer__main">
         <div className="container footer__grid">
           <div className="footer__col footer__brandcol">
@@ -62,8 +47,9 @@ export default function Footer() {
 
           <div className="footer__col">
             <h4>{t("Contact", "Contact")}</h4>
+            {/* Phone struck out here and in every CTA band (scans of 10/08/2026).
+                It stays on Contact and Devis, where the client left it alone. */}
             <ul className="footer__contact">
-              <li><IconPhone /><a href={COMPANY.phoneHref}>{COMPANY.phone}</a></li>
               <li><IconMail /><a href={COMPANY.emailHref}>{COMPANY.email}</a></li>
               <li><IconMapPin /><span>{t(COMPANY.area.fr, COMPANY.area.en)}</span></li>
             </ul>

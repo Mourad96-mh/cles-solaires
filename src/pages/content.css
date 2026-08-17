@@ -28,7 +28,7 @@
   box-shadow: var(--shadow);
   aspect-ratio: 4 / 3;
 }
-.split__media img { width: 100%; height: 100%; object-fit: cover; }
+.split__media img, .split__media video { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* Three-line summary of a method (installation principle, …). */
 .ministeps {
   list-style: none;
@@ -65,7 +65,7 @@
   max-width: 440px;
   margin-inline: auto;
 }
-.split__media--tall img { height: auto; object-fit: contain; }
+.split__media--tall img, .split__media--tall video { height: auto; object-fit: contain; }
 .split__text h2 { margin-bottom: 14px; }
 
 /* Checklist */
@@ -103,6 +103,12 @@
 @media (max-width: 620px) {
   .spectable--compare th, .spectable--compare td { padding: 12px 14px; font-size: 0.9rem; }
 }
+
+/* Lets a table that cannot shrink any further be swiped instead of cut off.
+   .spectable carries overflow: hidden to clip its own rounded corners, so it
+   can never scroll itself — without this wrapper the last column of the
+   comparison table is simply unreachable on a 320-360px screen. */
+.table-scroll { overflow-x: auto; }
 
 /* Wide spec table: thead + many columns, no fixed first-column width */
 .spectable--wide { display: table; overflow-x: auto; }
@@ -234,8 +240,182 @@
 }
 .keyfigure svg { width: 26px; height: 26px; color: var(--solar-dark); flex-shrink: 0; }
 
+/* Row of captioned site photos. The client's captures are portrait phone
+   shots, so the frame is 3/4 and the caption carries what the crop cannot. */
+.shots { display: grid; gap: 28px; margin-top: 40px; }
+.shots--2 { grid-template-columns: repeat(2, 1fr); }
+.shots--3 { grid-template-columns: repeat(3, 1fr); }
+.shot { margin: 0; }
+.shot__media {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  aspect-ratio: 3 / 4;
+  background: var(--bg-soft);
+}
+/* Landscape frame for a portrait source: anchor the crop to the top, because
+   what gets cut is the gravel foreground and what must survive is the machine
+   (a centred crop beheads the drilling mast the caption points at). */
+.shot__media--wide { aspect-ratio: 4 / 3; }
+.shot__media--wide img { object-position: center top; }
+/* Phone video shot in portrait. The row is capped because two 9:16 frames at
+   full container width would each stand over a thousand pixels tall. */
+.shots--portrait { max-width: 720px; margin-inline: auto; }
+.shot__media--portrait { aspect-ratio: 9 / 16; }
+.shot__media img, .shot__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* "Photos entières — l'intérêt c'est la machine, pas l'ouvrier" (client, scan of
+   10/08/2026, pp. 18-19). Any fixed aspect-ratio frame crops a phone capture,
+   and on these shots the part that gets cut is the drilling rig itself. This
+   modifier drops the frame entirely: the image keeps its own proportions and
+   nothing is lost. */
+.shot__media--whole {
+  aspect-ratio: auto;
+  box-shadow: var(--shadow);
+}
+.shot__media--whole img {
+  height: auto;
+  object-fit: contain;
+}
+
+.shot figcaption {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+/* The client's own CAD drawings of the installation sequence. They are line art
+   on white with red annotations, so they need a white plate and generous
+   padding rather than the photo treatment — and they must never be cropped:
+   the callout labels live at the edges of the drawing. */
+.schemas { display: grid; gap: 30px; margin-top: 40px; }
+.schemas--2 { grid-template-columns: repeat(2, 1fr); }
+.schema { margin: 0; }
+.schema__media {
+  background: #fff;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.1));
+  border-radius: var(--radius);
+  padding: 18px;
+}
+/* Two columns, not three: these are CAD drawings whose red annotation text is
+   set at roughly 8 pt on the original. At a third of the container they were
+   present but unreadable, which defeats the point of publishing them. */
+.schema__media img {
+  width: 100%;
+  height: 420px;
+  object-fit: contain;
+  display: block;
+}
+.schema figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.schema figcaption strong { color: var(--ink); }
+
+/* Stated limit on what a picture proves — a workshop mock-up shown as a
+   mock-up, an indicative figure flagged as indicative. The client asked that
+   the site never let a prototype pass for a finished product. */
+.caveat {
+  display: block;
+  margin: 18px 0 0;
+  padding: 14px 18px;
+  border-left: 3px solid var(--solar);
+  background: var(--bg-soft);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--ink);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+/* "Photos — voir ma page 12" (client, scan of 10/08/2026, p. 26). The three
+   types of structure were a text-only accordion; he pasted one photo over each
+   collapsed row and named them by hand. So each type now leads with its own
+   picture, side by side as he laid them out, and the description that used to
+   be folded away is read straight off the card — nothing of his text is lost,
+   only the fold. */
+.typecards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 40px;
+  align-items: start;
+}
+.typecard {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.typecard__media { aspect-ratio: 4 / 3; background: var(--bg-soft); }
+.typecard__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* The photo and the name carry the card; the description sits behind them and
+   opens on demand, so the three types stay comparable at a glance whatever the
+   length of each text. */
+.typecard__summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 24px;
+  cursor: pointer;
+  list-style: none;
+  transition: background 0.15s ease;
+}
+.typecard__summary::-webkit-details-marker { display: none; }
+.typecard__summary h3 { margin: 0; font-size: 1.15rem; }
+.typecard__summary:hover { background: var(--bg-soft); }
+.typecard__summary:focus-visible { outline: 2px solid var(--solar); outline-offset: -2px; }
+.typecard__summary::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  margin-left: auto;
+  border-right: 2px solid var(--solar-dark);
+  border-bottom: 2px solid var(--solar-dark);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+.typecard__fold[open] > .typecard__summary::after { transform: rotate(-135deg); }
+.typecard__fold[open] > .typecard__summary { border-bottom: 1px solid var(--line); }
+.typecard__body { padding: 22px 24px 24px; }
+.typecard__body > p { margin: 0; color: var(--muted); }
+.typecard__spec { margin: 18px 0 0; }
+.typecard__spec dt {
+  font-family: var(--font-head);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--solar-dark);
+}
+.typecard__spec dd {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.typecard__spec dd + dt { margin-top: 14px; }
+
 @media (max-width: 900px) {
   .split { grid-template-columns: 1fr; gap: 32px; }
   .split--reverse .split__media { order: 0; }
   .versus { grid-template-columns: 1fr; }
+  .shots--3 { grid-template-columns: repeat(2, 1fr); }
+  .typecards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .shots--2, .shots--3 { grid-template-columns: 1fr; }
+  .schemas--2 { grid-template-columns: 1fr; }
+  .schema__media img { height: 320px; }
+  .typecards { grid-template-columns: 1fr; }
 }

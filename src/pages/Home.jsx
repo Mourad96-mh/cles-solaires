@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSeo, useReveal } from "../lib/hooks.js";
 import { useLang, L } from "../i18n.jsx";
-import { PRODUCTS, DOMAINES } from "../data/content.js";
+import { DOMAINES } from "../data/content.js";
 import { PARENT, PARTNER_ROLES } from "../data/site.js";
 import CtaBand from "../components/CtaBand.jsx";
 import PhotoFrame from "../components/PhotoFrame.jsx";
@@ -101,17 +101,22 @@ export default function Home() {
                 "Our commitment is to supply you with reliable, high-performance solutions tailored to your needs."
               )}
             </p>
+            {/* "temps de pose" → "temps de fixation" (scan of 10/08/2026, p. C):
+                the rafter removes the fixing work, not the whole installation. */}
             <p>
               {t(
-                "Notre chevron autobloquant annule presque totalement le temps de pose des panneaux, tandis que nos pieux d'ancrage expansifs remplacent le béton coulé par un ancrage mécanique dont la tenue peut être vérifiée par essai sur site, et notre structure est dimensionnée en fonction de votre site et de votre situation géographique.",
-                "Our self-locking rafter almost entirely removes panel installation time, while our expanding anchor piles replace poured concrete with mechanical anchoring whose hold can be verified by on-site testing, and our structure is sized according to your site and its geographic location."
+                "Notre chevron autobloquant annule presque totalement le temps de fixation des panneaux, tandis que nos pieux d'ancrage expansifs remplacent le béton coulé par un ancrage mécanique dont la tenue peut être vérifiée par essai sur site, et notre structure est dimensionnée en fonction de votre site et de votre situation géographique.",
+                "Our self-locking rafter almost entirely removes the panel fixing time, while our expanding anchor piles replace poured concrete with mechanical anchoring whose hold can be verified by on-site testing, and our structure is sized according to your site and its geographic location."
               )}
             </p>
           </div>
+          {/* The client's arrows swap the first two lines only (scan of
+              10/08/2026, p. C): the pile comes up to first, the chevron drops to
+              second. The structures line stays where it was. */}
           <ul className="intro__list reveal">
             {[
-              t("Chevron — blocage des panneaux sans aucune fixation", "Rafter — panels held without any fixing"),
               t("Pieux tous terrains et pieux sable, en L, XL et XXL", "All-terrain and sand piles, in L, XL and XXL"),
+              t("Chevron — blocage des panneaux sans aucune fixation", "Rafter — panels held without any fixing"),
               t("Structures porteuses réglables, galvanisées", "Adjustable, galvanised structures"),
               t("Plans, notices d'essais et notes de calculs", "Drawings, test notices and calculation notes"),
             ].map((t2) => (
@@ -127,7 +132,11 @@ export default function Home() {
         <div className="container">
           <div className="section-head center reveal">
             <span className="eyebrow">{t("Partenaire", "Partner")}</span>
-            <h2>{t("Les Clés Solaires au sein de la SAS ENCOME", "Les Clés Solaires within SAS ENCOME")}</h2>
+            {/* The client struck out the previous headline, "Les Clés Solaires
+                au sein de la SAS ENCOME" (scan of 10/08/2026, p. 3), while
+                leaving the paragraph under it — which already states the
+                relationship — untouched. The heading now just names the two. */}
+            <h2>{t("Les Clés Solaires & la SAS ENCOME", "Les Clés Solaires & SAS ENCOME")}</h2>
             <p>
               {t(
                 `La ${PARENT.name}, ${PARENT.activity.fr.toLowerCase()}, intègre en son sein le domaine des structures solaires nommé « Les Clés Solaires ».`,
@@ -145,39 +154,22 @@ export default function Home() {
           </div>
           <div className="grid grid-4" style={{ marginTop: 28 }}>
             {PARTNER_ROLES.flatMap((p) => p.photos).map((ph) => (
-              <PhotoFrame key={ph.fr} caption={t(ph.fr, ph.en)} />
+              <PhotoFrame
+                key={ph.fr}
+                caption={t(ph.fr, ph.en)}
+                src={ph.image}
+                alt={ph.alt && t(ph.alt.fr, ph.alt.en)}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* PRODUCTS */}
-      <section className="section">
-        <div className="container">
-          <div className="section-head center reveal">
-            <span className="eyebrow">{t("Nos produits", "Our products")}</span>
-            <h2>{t("Pieu · Structure · Chevron", "Pile · Structure · Rafter")}</h2>
-            <p>{t("Chaque poste est livrable séparément et s'intègre dans un système cohérent.", "Each item can be supplied separately and fits into one coherent system.")}</p>
-          </div>
-          <div className="grid grid-3">
-            {PRODUCTS.map((p) => (
-              <article className="card prodcard reveal" key={p.key}>
-                <span className="icon-badge"><p.icon /></span>
-                <h3>{t(p.title.fr, p.title.en)}</h3>
-                <p className="prodcard__tag">{t(p.tagline.fr, p.tagline.en)}</p>
-                <ul className="prodcard__points">
-                  {p.points.map((pt) => (
-                    <li key={pt.fr}><IconCheck /> {t(pt.fr, pt.en)}</li>
-                  ))}
-                </ul>
-                <L to={p.to} className="link-arrow">
-                  {t("Découvrir", "Discover")} <IconArrowRight />
-                </L>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* The "Pieu · Structure · Chevron" card row that stood here was crossed
+          out wholesale by the client (scan of 10/08/2026, accueil supplement
+          p. A). The three cards are unchanged on /produits, which the hero's
+          "Découvrir nos produits" button already points at; PRODUCTS therefore
+          has no consumer on this page any more. */}
 
       {/* CHEVRON HIGHLIGHT */}
       <section className="section section--soft">
@@ -185,13 +177,16 @@ export default function Home() {
           <div className="refprev__media reveal">
             <img src="/media/chevron-blocage.webp" alt={t("Chevron de blocage des panneaux photovoltaïques", "Rafter clamping photovoltaic panels")} loading="lazy" />
           </div>
+          {/* Three corrections from the scan of 10/08/2026, p. D: the "Produit
+              phare" eyebrow struck out and marked "NON" — the pile is patented
+              too, so neither product is the flagship; "le chevron ~~qui~~
+              bloque"; and "un seul ~~écrou~~ → vis bloque l'ensemble". */}
           <div className="refprev__text reveal">
-            <span className="eyebrow">{t("Produit phare", "Flagship product")}</span>
-            <h2>{t("Le chevron qui bloque les panneaux sans aucune fixation", "The rafter that holds panels without any fixing")}</h2>
+            <h2>{t("Le chevron bloque les panneaux sans aucune fixation", "The rafter holds panels without any fixing")}</h2>
             <p className="lead">
               {t(
-                "Deux profils coulissants bloquent les panneaux sans aucune fixation : une fois tous les panneaux en place, un seul écrou bloque l'ensemble. Ces profils sont eux-mêmes des éléments de la structure porteuse et remplacent les systèmes d'intégration classiques à crapauds.",
-                "Two sliding profiles lock the panels without any fixing: once every panel is in place, a single nut locks the whole set. Those profiles are themselves part of the load-bearing structure and replace classic clamp-based integration systems."
+                "Deux profils coulissants bloquent les panneaux sans aucune fixation : une fois tous les panneaux en place, une seule vis bloque l'ensemble. Ces profils sont eux-mêmes des éléments de la structure porteuse et remplacent les systèmes d'intégration classiques à crapauds.",
+                "Two sliding profiles lock the panels without any fixing: once every panel is in place, a single screw locks the whole set. Those profiles are themselves part of the load-bearing structure and replace classic clamp-based integration systems."
               )}
             </p>
             <L to="/chevrons" className="btn btn--primary">

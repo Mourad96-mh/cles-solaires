@@ -90,9 +90,9 @@ export default function Produits() {
               </div>
             </li>
           </ul>
-          <div className="domaine-links reveal" style={{ marginTop: 32 }}>
-            <L to="/references" className="btn btn--outline">{t("Nos réalisations", "Our projects")} <IconArrowRight /></L>
-          </div>
+          {/* "Nos réalisations →" struck out here (scan of 10/08/2026, p. 7),
+              as was the reference marquee it led into. The Références page is
+              still one click away in the main navigation. */}
         </div>
       </section>
 

@@ -46,6 +46,13 @@
 .filedrop:hover { border-color: var(--sky); }
 .filedrop input[type="file"] { display: none; }
 
+/* A grid item's min-width defaults to auto, so it refuses to shrink below its
+   own min-content — and a text input carries a chunky intrinsic width. Below
+   ~390px that pushed the form card past the viewport, where the root's
+   overflow-x: clip cut it off with no way to scroll to it. */
+.form-layout > * { min-width: 0; }
+.form-card input, .form-card textarea, .form-card select { min-width: 0; }
+
 @media (max-width: 880px) {
   .form-layout { grid-template-columns: 1fr; gap: 36px; }
 }

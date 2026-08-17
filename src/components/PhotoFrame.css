@@ -31,6 +31,28 @@
   max-width: 26ch;
 }
 
+/* Same slot once the real photograph has arrived: the reserved-space treatment
+   (dashed border, tinted fill) drops away and the picture takes the box. The
+   sources are portrait phone shots and the box is 4/3, so the crop is tight —
+   the subject sits centred in each of them. */
+.photoframe--filled {
+  border: none;
+  background: none;
+  padding: 0;
+  gap: 12px;
+  justify-content: flex-start;
+  margin: 0;
+}
+.photoframe--filled img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.photoframe--filled.photoframe--wide img { aspect-ratio: 4 / 3; }
+.photoframe--filled.photoframe--tall img { aspect-ratio: 3 / 4; }
+
 /* Inside a .split__media the parent already sets the ratio, shadow and clipping,
    so the frame just fills it and drops its own box treatment. */
 .split__media > .photoframe,

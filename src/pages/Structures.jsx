@@ -28,6 +28,26 @@ export default function Structures() {
   /* Extra detail per structure type, kept beside the client's three definitions:
      these come from his earlier document and are unaffected by the 01/08/2026
      corrections (which only re-scoped the profiles, galvanising and erection). */
+  /* One photo per type, as the client pasted them on his page 12: a solar
+     field, an agrivoltaic frame, a canopy. The canopy shot is his own file,
+     found back in what he had already sent. The other two are the closest
+     shots in the library — his page-12 originals are photocopies on the scan
+     and are still to come (see questions-client.md). */
+  const MEDIA = {
+    champs: {
+      src: "/media/ref-centrale-coteau.webp",
+      alt: t("Champ solaire au sol : files de structures légères en profils minces portant les panneaux, sur un coteau", "Ground-mounted solar field: rows of light thin-profile structures carrying the panels, on a hillside"),
+    },
+    agrivoltaisme: {
+      src: "/media/ref-agrivoltaique.jpg",
+      alt: t("Structure agrivoltaïque : poteaux tubulaires dégageant toute la hauteur sous les arbalétriers en profils minces", "Agrivoltaic structure: tubular posts clearing the full height under thin-profile rafters"),
+    },
+    ombrieres: {
+      src: "/media/ombriere-parking.jpg",
+      alt: t("Ombrière photovoltaïque en profils du commerce galvanisés à chaud, abritant un véhicule", "Photovoltaic canopy in hot-dip galvanised standard profiles, sheltering a vehicle"),
+    },
+  };
+
   const EXTRAS = {
     champs: t("Elle comprend 2 files de pannes pour la pose des panneaux en portrait, ou aucune panne pour la pose en paysage ; la solution la plus économique est étudiée selon le projet.", "It has 2 rows of purlins for portrait panel installation, or no purlin at all for landscape; the most economical solution is studied per project."),
     agrivoltaisme: t("La pose des panneaux se fait en portrait ou en paysage, selon qu'une étanchéité de toiture est utile ou non.", "Panels are laid in portrait or landscape, depending on whether roof watertightness is needed."),
@@ -49,8 +69,14 @@ export default function Structures() {
 
       <section className="section">
         <div className="container split">
+          {/* "Pas la bonne photo — voir ma page 11" (scan of 10/08/2026, p. 24).
+              This one carries the section better than any shot taken under
+              finished panels: the frame is still bare, so the posts, the
+              arbalétriers, the bracing and the adjustment collars at the foot
+              of each post are all readable — which is exactly what the two
+              paragraphs beside it describe. */}
           <div className="split__media reveal">
-            <img src="/media/structure-detail.jpg" alt={t("Structure porteuse photovoltaïque", "Photovoltaic load-bearing structure")} loading="lazy" />
+            <img src="/media/structure-ossature-montage.webp" alt={t("Structure porteuse galvanisée en cours de montage : files de poteaux réglables, arbalétriers, pannes et contreventements, avant pose des panneaux", "Galvanised load-bearing frame under assembly: rows of adjustable posts, rafters, purlins and bracing, before the panels are fitted")} loading="lazy" />
           </div>
           <div className="split__text reveal">
             <span className="eyebrow">{t("La structure", "The structure")}</span>
@@ -96,24 +122,33 @@ export default function Structures() {
             <h2>{t("Trois types de structures", "Three types of structure")}</h2>
             <p>{t("La conception, les profils, la galvanisation et le mode de pose varient d'un type à l'autre.", "The design, the profiles, the galvanising and the erection method vary from one type to the next.")}</p>
           </div>
-          <div className="reveal">
+          <div className="typecards reveal">
             {STRUCTURE_TYPES.map((s) => (
-              <details className="disclosure" key={s.key}>
-                <summary className="disclosure__summary">{t(s.title.fr, s.title.en)}</summary>
-                <div className="disclosure__body">
-                  <p>{t(s.text.fr, s.text.en)}</p>
-                  <h4>{t("Galvanisation", "Galvanising")}</h4>
-                  <p>{t(s.galva.fr, s.galva.en)}</p>
-                  <h4>{t("Mise en œuvre", "Erection")}</h4>
-                  <p>{t(s.pose.fr, s.pose.en)}.</p>
-                  {EXTRAS[s.key] && (
-                    <>
-                      <h4>{t("Pose des panneaux", "Fitting the panels")}</h4>
-                      <p>{EXTRAS[s.key]}</p>
-                    </>
-                  )}
+              <article className="typecard" key={s.key}>
+                <div className="typecard__media">
+                  <img src={MEDIA[s.key].src} alt={MEDIA[s.key].alt} loading="lazy" />
                 </div>
-              </details>
+                <details className="typecard__fold">
+                  <summary className="typecard__summary">
+                    <h3>{t(s.title.fr, s.title.en)}</h3>
+                  </summary>
+                  <div className="typecard__body">
+                    <p>{t(s.text.fr, s.text.en)}</p>
+                    <dl className="typecard__spec">
+                      <dt>{t("Galvanisation", "Galvanising")}</dt>
+                      <dd>{t(s.galva.fr, s.galva.en)}</dd>
+                      <dt>{t("Mise en œuvre", "Erection")}</dt>
+                      <dd>{t(s.pose.fr, s.pose.en)}.</dd>
+                      {EXTRAS[s.key] && (
+                        <>
+                          <dt>{t("Pose des panneaux", "Fitting the panels")}</dt>
+                          <dd>{EXTRAS[s.key]}</dd>
+                        </>
+                      )}
+                    </dl>
+                  </div>
+                </details>
+              </article>
             ))}
           </div>
         </div>

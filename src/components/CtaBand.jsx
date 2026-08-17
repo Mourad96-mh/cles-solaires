@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { COMPANY } from "../data/site.js";
 import { useLang, localizePath } from "../i18n.jsx";
-import { IconArrowRight, IconPhone } from "../lib/icons.jsx";
+import { IconArrowRight } from "../lib/icons.jsx";
 import "./CtaBand.css";
 
 export default function CtaBand({ title, text }) {
@@ -19,13 +18,13 @@ export default function CtaBand({ title, text }) {
               )}
           </p>
         </div>
+        {/* Phone number struck out of this band on every page it appears
+            (scans of 10/08/2026, pp. 7, 21, 36, 41 and the accueil supplement).
+            The quote button stays; the number is still on Contact and Devis. */}
         <div className="ctaband__actions">
           <Link to={localizePath("/devis", lang)} className="btn btn--primary">
             {t("Demander un devis", "Request a quote")} <IconArrowRight />
           </Link>
-          <a href={COMPANY.phoneHref} className="btn btn--outline-light">
-            <IconPhone /> {COMPANY.phone}
-          </a>
         </div>
       </div>
     </section>

@@ -37,21 +37,24 @@ export default function References() {
 
       <section className="section">
         <div className="container">
+          {/* The client struck out the location tag on every tile he reviewed
+              (scan of 10/08/2026, p. 40 — nine of them, all reading "LA
+              RÉUNION"). The subject alone is captioned now; `place` is kept in
+              content.js because the accueil paragraph still names the countries
+              and he left that one standing. */}
           <div className="gallery">
             {REFERENCES.map((r) => {
               const title = t(r.type.fr, r.type.en);
-              const place = t(r.place.fr, r.place.en);
               return (
                 <button
                   type="button"
                   className="gallery__item reveal"
                   key={r.key}
-                  onClick={() => setActive({ src: r.image, title: `${title} — ${place}` })}
-                  aria-label={`${t("Agrandir", "Enlarge")} : ${title} — ${place}`}
+                  onClick={() => setActive({ src: r.image, title })}
+                  aria-label={`${t("Agrandir", "Enlarge")} : ${title}`}
                 >
-                  <img src={r.image} alt={`${title} — ${place}`} loading="lazy" />
+                  <img src={r.image} alt={title} loading="lazy" />
                   <span className="gallery__cap">
-                    <span className="gallery__cat">{place}</span>
                     <span className="gallery__title">{title}</span>
                   </span>
                 </button>
