@@ -28,7 +28,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 88px;
+  height: 96px;
 }
 
 .brand {
@@ -42,9 +42,11 @@
 .brand__logo {
   /* The logo is a stacked lockup (emblem + wordmark + chevron) in a near-square
      PNG with no transparent padding to reclaim, so presence comes from size
-     alone. 80px in the 88px bar leaves 4px of breathing room top and bottom —
-     about the largest it can go before it reads as cramped. */
-  height: 80px;
+     alone. The bar grows with it — 88px in a 96px bar keeps the same 4px of
+     breathing room top and bottom, which is what stops it reading as cramped.
+     The mobile panel follows on its own: Navbar.jsx measures the header and
+     publishes --nav-h, so nothing here needs to be kept in sync by hand. */
+  height: 88px;
   width: auto;
   display: block;
   object-fit: contain;
